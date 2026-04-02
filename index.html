@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insurance Risk Monitoring — Demo Control Panel</title>
+    <title>Flood Assist — Risk Monitoring Demo</title>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --bg: #F8F9FB;
+            --bg: #F5F7FA;
             --surface: #FFFFFF;
-            --surface-hover: #F1F3F7;
-            --text-primary: #1A1D23;
-            --text-secondary: #5F6B7A;
-            --text-muted: #9CA3AF;
+            --surface-hover: #EFF2F7;
+            --text-primary: #1B2A4A;
+            --text-secondary: #4A5E80;
+            --text-muted: #8E9BB5;
+            --brand: #1A5FB4;
+            --brand-dark: #154A8F;
+            --brand-glow: rgba(26, 95, 180, 0.08);
             --teal: #0D9488;
             --teal-dark: #0F766E;
             --teal-glow: rgba(13, 148, 136, 0.08);
@@ -22,19 +25,19 @@
             --amber-glow: rgba(217, 119, 6, 0.08);
             --red: #DC2626;
             --red-dark: #B91C1C;
-            --red-glow: rgba(220, 38, 38, 0.08);
+            --red-glow: rgba(220, 38, 38, 0.06);
             --blue: #2563EB;
             --blue-glow: rgba(37, 99, 235, 0.08);
             --green: #16A34A;
             --green-glow: rgba(22, 163, 74, 0.08);
-            --border: #E5E7EB;
-            --border-strong: #D1D5DB;
+            --border: #E2E6EE;
+            --border-strong: #CBD2DE;
             --input-bg: #FFFFFF;
             --radius-lg: 12px;
             --radius-md: 8px;
             --radius-sm: 6px;
-            --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-            --shadow-md: 0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.04);
+            --shadow: 0 1px 3px rgba(27,42,74,0.06), 0 1px 2px rgba(27,42,74,0.04);
+            --shadow-md: 0 4px 6px rgba(27,42,74,0.06), 0 2px 4px rgba(27,42,74,0.03);
         }
 
         body {
@@ -45,18 +48,22 @@
             line-height: 1.5;
         }
 
-        .container { max-width: 920px; margin: 0 auto; padding: 32px 24px; }
+        .container { max-width: 940px; margin: 0 auto; padding: 32px 24px; }
 
         .header {
             display: flex; align-items: center; justify-content: space-between;
-            margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border);
+            margin-bottom: 28px; padding-bottom: 20px; border-bottom: 2px solid var(--brand);
         }
-        .header-left h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); }
+        .header-left h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--brand); }
         .header-left p { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
         .header-tag {
-            font-size: 11px; font-weight: 600; text-transform: uppercase;
-            letter-spacing: 0.08em; padding: 4px 10px; border-radius: var(--radius-sm);
-            background: var(--blue-glow); color: var(--blue); margin-left: 10px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.1em; padding: 3px 8px; border-radius: var(--radius-sm);
+            background: var(--brand-glow); color: var(--brand); margin-left: 10px;
+            border: 1px solid rgba(26,95,180,0.15);
+        }
+        .header-sub {
+            font-size: 11px; color: var(--text-muted); margin-top: 2px;
         }
 
         .status-badge {
@@ -82,8 +89,17 @@
             letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 16px;
         }
 
+        .context-banner {
+            background: var(--brand-glow); border: 1px solid rgba(26,95,180,0.12);
+            border-radius: var(--radius-md); padding: 14px 18px; margin-bottom: 20px;
+            font-size: 13px; color: var(--brand); line-height: 1.6;
+        }
+        .context-banner strong { font-weight: 700; }
+        .context-banner .detail { color: var(--text-secondary); font-size: 12px; margin-top: 4px; }
+
         .lead-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .lead-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+        .lead-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
 
         .field label {
             display: block; font-size: 12px; font-weight: 500;
@@ -99,14 +115,15 @@
             border-radius: var(--radius-md); color: var(--text-primary);
             font-size: 14px; font-family: inherit; transition: border-color 0.15s;
         }
-        .field input:focus, .field select:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-glow); }
+        .field input:focus, .field select:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-glow); }
         .field input::placeholder { color: var(--text-muted); }
+        .field select { cursor: pointer; }
 
         .risk-table { width: 100%; border-collapse: collapse; font-size: 13px; }
         .risk-table th {
-            text-align: left; padding: 8px 12px; font-weight: 600; font-size: 12px;
+            text-align: left; padding: 8px 12px; font-weight: 600; font-size: 11px;
             color: var(--text-secondary); border-bottom: 2px solid var(--border);
-            text-transform: uppercase; letter-spacing: 0.04em;
+            text-transform: uppercase; letter-spacing: 0.05em;
         }
         .risk-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
         .risk-table tr:last-child td { border-bottom: none; }
@@ -122,6 +139,7 @@
         .rating-high { background: var(--red-glow); color: var(--red); border: 1px solid rgba(220,38,38,0.15); }
         .rating-yes { background: var(--red-glow); color: var(--red); border: 1px solid rgba(220,38,38,0.15); }
         .rating-no { background: var(--green-glow); color: var(--green); border: 1px solid rgba(22,163,74,0.15); }
+        .rating-eligible { background: var(--brand-glow); color: var(--brand); border: 1px solid rgba(26,95,180,0.15); }
 
         .signal-card { position: relative; overflow: hidden; }
         .signal-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
@@ -219,10 +237,10 @@
 
         .btn-primary-sm {
             padding: 8px 18px; border-radius: var(--radius-md); border: none;
-            background: var(--teal); color: #fff; font-family: inherit;
+            background: var(--brand); color: #fff; font-family: inherit;
             font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s;
         }
-        .btn-primary-sm:hover { background: var(--teal-dark); }
+        .btn-primary-sm:hover { background: var(--brand-dark); }
 
         .saved-toast {
             position: fixed; bottom: 24px; right: 24px; padding: 10px 20px;
@@ -250,7 +268,7 @@
         .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
         @media (max-width: 640px) {
-            .lead-grid, .lead-grid-3 { grid-template-columns: 1fr; }
+            .lead-grid, .lead-grid-3, .lead-grid-4 { grid-template-columns: 1fr; }
             .header { flex-direction: column; align-items: flex-start; gap: 12px; }
         }
     </style>
@@ -260,13 +278,20 @@
 
         <div class="header">
             <div class="header-left">
-                <h1>Insurance Risk Monitoring<span class="header-tag">UK</span></h1>
-                <p>Demo Control Panel — Backstage trigger UI for flood risk signals</p>
+                <h1>Flood Assist<span class="header-tag">Demo</span></h1>
+                <p>Proactive Risk Monitoring — Backstage trigger UI</p>
+                <p class="header-sub">Powered by PriceHubble property intelligence</p>
             </div>
             <div class="status-badge">
                 <span class="status-dot"></span>
-                Ready
+                Monitoring Active
             </div>
+        </div>
+
+        <!-- Client Context -->
+        <div class="context-banner">
+            <strong>Flood Assist Insurance</strong> — UK's only specialist flood insurance broker. ~95% of clients in the Flood Re scheme. Direct access to Flood Re property database. Build Back Better certified.
+            <div class="detail">Scenario: A policyholder's flood risk profile has changed following updated Environment Agency mapping. Flood Assist uses PriceHubble monitoring to detect the change and proactively reach out before the customer's renewal.</div>
         </div>
 
         <!-- Monitored Risk Metrics -->
@@ -308,6 +333,10 @@
                         <td class="metric-name"><span class="metric-icon">🌿</span>Japanese Knotweed Risk Rating</td>
                         <td><span class="rating-badge rating-low">Low</span></td>
                     </tr>
+                    <tr>
+                        <td class="metric-name"><span class="metric-icon">🔵</span>Flood Re Eligible</td>
+                        <td><span class="rating-badge rating-eligible">Eligible</span></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -339,19 +368,57 @@
                 </div>
                 <div class="field">
                     <label for="policy_ref">Policy Reference <span class="var-hint">→ policy_ref</span></label>
-                    <input type="text" id="policy_ref" value="HOM-2024-00847" placeholder="e.g. HOM-2024-00847">
+                    <input type="text" id="policy_ref" value="FA-2024-00847" placeholder="e.g. FA-2024-00847">
                 </div>
             </div>
 
-            <div class="section-divider" style="margin-top: 20px">Insurer &amp; agent context</div>
-            <div class="lead-grid-3">
+            <div class="section-divider" style="margin-top: 20px">Property &amp; policy context</div>
+            <div class="lead-grid-4">
                 <div class="field">
-                    <label for="advisor_name">Insurance Advisor <span class="var-hint">→ advisor_name</span></label>
-                    <input type="text" id="advisor_name" value="James Harrington" placeholder="e.g. James Harrington">
+                    <label for="council_tax_band">Council Tax Band <span class="var-hint">→ council_tax_band</span></label>
+                    <select id="council_tax_band">
+                        <option value="A">Band A</option>
+                        <option value="B">Band B</option>
+                        <option value="C">Band C</option>
+                        <option value="D" selected>Band D</option>
+                        <option value="E">Band E</option>
+                        <option value="F">Band F</option>
+                        <option value="G">Band G</option>
+                        <option value="H">Band H</option>
+                    </select>
                 </div>
                 <div class="field">
-                    <label for="insurer_name">Insurer Name <span class="var-hint">→ insurer_name</span></label>
-                    <input type="text" id="insurer_name" value="Greenfield Insurance" placeholder="e.g. Greenfield Insurance">
+                    <label for="cover_type">Cover Type</label>
+                    <select id="cover_type">
+                        <option value="buildings_contents" selected>Buildings &amp; Contents</option>
+                        <option value="buildings">Buildings Only</option>
+                        <option value="contents">Contents Only</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="flood_re_status">Flood Re Status</label>
+                    <select id="flood_re_status">
+                        <option value="eligible" selected>Eligible</option>
+                        <option value="in_scheme">In Scheme</option>
+                        <option value="not_eligible">Not Eligible</option>
+                        <option value="unknown">Unknown</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="renewal_date">Renewal Date</label>
+                    <input type="date" id="renewal_date" value="2026-09-15">
+                </div>
+            </div>
+
+            <div class="section-divider" style="margin-top: 20px">Flood Assist advisor &amp; voice agent</div>
+            <div class="lead-grid-3">
+                <div class="field">
+                    <label for="advisor_name">Flood Assist Advisor <span class="var-hint">→ advisor_name</span></label>
+                    <input type="text" id="advisor_name" value="Tom Bradley" placeholder="e.g. Tom Bradley">
+                </div>
+                <div class="field">
+                    <label for="advisor_phone">Advisor Direct Line</label>
+                    <input type="tel" id="advisor_phone" value="01832 770770" placeholder="e.g. 01832 770770">
                 </div>
                 <div class="field">
                     <label for="agent_id">ElevenLabs Agent ID <span class="var-hint">→ agent_id</span></label>
@@ -366,16 +433,16 @@
                 <div class="signal-icon">🌊</div>
                 <div class="signal-info">
                     <h3>Flood Risk: Low → Medium</h3>
-                    <p>Soft signal — triggers personalised email to policyholder</p>
+                    <p>Soft signal — personalised email with cover review advice &amp; Flood Re guidance</p>
                 </div>
                 <span class="signal-act">Act 2</span>
             </div>
 
             <ul class="signal-steps" id="softSteps">
-                <li>Log risk event in dashboard (flood risk moderate increase)</li>
-                <li>Build personalised email with property details &amp; risk explanation</li>
-                <li>Send email to policyholder with property page link</li>
-                <li>Track email delivery &amp; engagement in dashboard</li>
+                <li>Detect risk change via PriceHubble monitoring</li>
+                <li>Check Flood Re eligibility &amp; council tax band pricing</li>
+                <li>Send personalised email: risk explanation + property page link</li>
+                <li>Track engagement &amp; flag for advisor follow-up at renewal</li>
             </ul>
 
             <button class="trigger-btn" id="softTrigger">
@@ -393,16 +460,16 @@
                 <div class="signal-icon">🌊</div>
                 <div class="signal-info">
                     <h3>Flood Risk: Low → High</h3>
-                    <p>Hard signal — triggers AI voice agent call to policyholder</p>
+                    <p>Hard signal — AI voice call with urgent cover review &amp; Build Back Better options</p>
                 </div>
                 <span class="signal-act">Act 3</span>
             </div>
 
             <ul class="signal-steps" id="hardSteps">
-                <li>Log risk event in dashboard (flood risk severe escalation)</li>
+                <li>Detect severe risk escalation &amp; flood insurance issue flag</li>
                 <li>Trigger AI voice agent call via ElevenLabs</li>
-                <li>Agent explains flood risk change, offers advisor callback</li>
-                <li>Log call transcript &amp; outcome in dashboard</li>
+                <li>Agent explains risk change, Flood Re protection &amp; Build Back Better</li>
+                <li>Offer immediate advisor callback or appointment booking</li>
             </ul>
 
             <button class="trigger-btn" id="hardTrigger">
@@ -457,14 +524,16 @@
     <div class="saved-toast" id="toast"></div>
 
     <script>
-        const STORAGE_KEY = 'irm-demo-config-v2';
+        const STORAGE_KEY = 'fa-demo-config-v3';
         const $ = id => document.getElementById(id);
 
         const els = {
             firstName: $('firstName'), lastName: $('lastName'),
             phone_number: $('phone_number'), email: $('email'),
             property_address: $('property_address'), policy_ref: $('policy_ref'),
-            advisor_name: $('advisor_name'), insurer_name: $('insurer_name'),
+            council_tax_band: $('council_tax_band'), cover_type: $('cover_type'),
+            flood_re_status: $('flood_re_status'), renewal_date: $('renewal_date'),
+            advisor_name: $('advisor_name'), advisor_phone: $('advisor_phone'),
             agent_id: $('agent_id'), agent_phone_number_id: $('agent_phone_number_id'),
             webhookSoft: $('webhookSoft'), webhookHard: $('webhookHard'),
             softTrigger: $('softTrigger'), hardTrigger: $('hardTrigger'),
@@ -479,14 +548,19 @@
             toast: $('toast'),
         };
 
+        const FLOOD_RE_PREMIUMS = {
+            A: 46, B: 46, C: 92, D: 138, E: 230, F: 368, G: 552, H: 552
+        };
+
         const DEFAULTS = {
             firstName: 'Sarah', lastName: 'Mitchell',
             phone_number: '+447700900123',
             email: 'sarah.mitchell@example.co.uk',
             property_address: '14 Riverside Crescent, Tewkesbury, GL20 5AB',
-            policy_ref: 'HOM-2024-00847',
-            advisor_name: 'James Harrington',
-            insurer_name: 'Greenfield Insurance',
+            policy_ref: 'FA-2024-00847',
+            council_tax_band: 'D', cover_type: 'buildings_contents',
+            flood_re_status: 'eligible', renewal_date: '2026-09-15',
+            advisor_name: 'Tom Bradley', advisor_phone: '01832 770770',
             agent_id: '', agent_phone_number_id: '',
             webhookSoft: '', webhookHard: '',
         };
@@ -566,7 +640,7 @@
 
         function updateRiskTable(changes) {
             const rows = document.querySelectorAll('.risk-table tbody tr');
-            const metricKeys = Object.keys(RISK_METRICS);
+            const metricKeys = [...Object.keys(RISK_METRICS), 'flood_re'];
             metricKeys.forEach((key, i) => {
                 if (changes[key] && rows[i]) {
                     const cell = rows[i].querySelector('td:last-child');
@@ -574,6 +648,7 @@
                     let cls = 'rating-' + val.toLowerCase();
                     if (val === 'Yes') cls = 'rating-yes';
                     if (val === 'No') cls = 'rating-no';
+                    if (val === 'Eligible') cls = 'rating-eligible';
                     cell.innerHTML = `<span class="rating-badge ${cls}">${val}</span>`;
                 }
             });
@@ -583,9 +658,11 @@
             const firstName = v(els.firstName, DEFAULTS.firstName);
             const lastName = v(els.lastName, DEFAULTS.lastName);
             const addr = v(els.property_address, DEFAULTS.property_address);
+            const band = v(els.council_tax_band, 'D');
             return {
                 signal_type: 'flood_risk_moderate_increase',
                 severity: 'medium',
+                broker: 'Flood Assist Insurance',
                 customer_first_name: firstName,
                 customer_last_name: lastName,
                 customer_name: `${firstName} ${lastName}`.trim(),
@@ -593,8 +670,13 @@
                 email: v(els.email, DEFAULTS.email),
                 property_address: addr,
                 policy_ref: v(els.policy_ref, DEFAULTS.policy_ref),
+                council_tax_band: band,
+                flood_re_premium_cap: `£${FLOOD_RE_PREMIUMS[band] || '—'}`,
+                flood_re_status: v(els.flood_re_status, 'eligible'),
+                cover_type: v(els.cover_type, 'buildings_contents'),
+                renewal_date: v(els.renewal_date, DEFAULTS.renewal_date),
                 advisor_name: v(els.advisor_name, DEFAULTS.advisor_name),
-                insurer_name: v(els.insurer_name, DEFAULTS.insurer_name),
+                advisor_phone: v(els.advisor_phone, DEFAULTS.advisor_phone),
                 risk_metrics: {
                     flood_defended_present: { previous: 'Low', new: 'Medium', metric: RISK_METRICS.flood_defended_present },
                     flood_undefended_present: { previous: 'Medium', new: 'Medium', metric: RISK_METRICS.flood_undefended_present },
@@ -607,7 +689,7 @@
                 risk_change: {
                     title: 'Flood risk increased from Low to Medium',
                     description: `Updated Environment Agency modelling shows increased surface water and river flood exposure for ${addr}. The defended present-day scenario has moved from Low to Medium, indicating rising risk even with existing flood defences in place.`,
-                    recommendation: 'Review your flood cover limits and consider whether your current policy adequately covers flood-related damage. Contact your advisor to discuss options.',
+                    recommendation: `As a Flood Assist client your cover remains protected under the Flood Re scheme — your flood premium is capped at £${FLOOD_RE_PREMIUMS[band] || '—'}/year for Band ${band}. We recommend reviewing your cover ahead of your renewal to ensure it reflects the latest risk profile. Your dedicated advisor ${v(els.advisor_name, DEFAULTS.advisor_name)} is available on ${v(els.advisor_phone, DEFAULTS.advisor_phone)}.`,
                 },
             };
         }
@@ -616,9 +698,11 @@
             const firstName = v(els.firstName, DEFAULTS.firstName);
             const lastName = v(els.lastName, DEFAULTS.lastName);
             const addr = v(els.property_address, DEFAULTS.property_address);
+            const band = v(els.council_tax_band, 'D');
             return {
                 signal_type: 'flood_risk_severe_escalation',
                 severity: 'high',
+                broker: 'Flood Assist Insurance',
                 customer_first_name: firstName,
                 customer_last_name: lastName,
                 customer_name: `${firstName} ${lastName}`.trim(),
@@ -626,12 +710,22 @@
                 email: v(els.email, DEFAULTS.email),
                 property_address: addr,
                 policy_ref: v(els.policy_ref, DEFAULTS.policy_ref),
+                council_tax_band: band,
+                flood_re_premium_cap: `£${FLOOD_RE_PREMIUMS[band] || '—'}`,
+                flood_re_status: v(els.flood_re_status, 'eligible'),
+                cover_type: v(els.cover_type, 'buildings_contents'),
+                renewal_date: v(els.renewal_date, DEFAULTS.renewal_date),
                 advisor_name: v(els.advisor_name, DEFAULTS.advisor_name),
-                insurer_name: v(els.insurer_name, DEFAULTS.insurer_name),
+                advisor_phone: v(els.advisor_phone, DEFAULTS.advisor_phone),
                 agent_id: v(els.agent_id, DEFAULTS.agent_id),
                 agent_phone_number_id: v(els.agent_phone_number_id, DEFAULTS.agent_phone_number_id),
                 language_spoken: 'en-GB',
-                first_message: `Hello, is this ${firstName}?`,
+                first_message: `Hello, is this ${firstName}? I'm calling from Flood Assist Insurance.`,
+                build_back_better: {
+                    eligible: true,
+                    allowance: '£10,000',
+                    description: 'Up to £10,000 for flood resilience measures over and above standard repair costs, available through Flood Re\'s Build Back Better initiative.',
+                },
                 risk_metrics: {
                     flood_defended_present: { previous: 'Low', new: 'High', metric: RISK_METRICS.flood_defended_present },
                     flood_undefended_present: { previous: 'Medium', new: 'High', metric: RISK_METRICS.flood_undefended_present },
@@ -642,9 +736,9 @@
                     knotweed: { previous: 'Low', new: 'Low', metric: RISK_METRICS.knotweed },
                 },
                 risk_change: {
-                    title: 'Flood risk escalated from Low to High',
-                    description: `${addr} has been reclassified as High flood risk across all defended and undefended scenarios following updated Environment Agency flood mapping. A flood insurance issue has also been flagged for this property.`,
-                    recommendation: 'Urgent review of flood cover required. The property may need specialist flood insurance. Contact your advisor immediately to discuss revised cover options and flood resilience measures.',
+                    title: 'Flood risk escalated from Low to High — flood insurance issue flagged',
+                    description: `${addr} has been reclassified as High flood risk across all Environment Agency scenarios. A flood insurance issue has been flagged, meaning standard insurers may decline cover. As a Flood Re specialist, Flood Assist can ensure continued cover.`,
+                    recommendation: `Urgent review required. Your property now qualifies for Flood Re protection — flood premium capped at £${FLOOD_RE_PREMIUMS[band] || '—'}/year (Band ${band}), excess fixed at £250. You may also be eligible for up to £10,000 in flood resilience improvements through Build Back Better. Contact ${v(els.advisor_name, DEFAULTS.advisor_name)} immediately on ${v(els.advisor_phone, DEFAULTS.advisor_phone)}.`,
                 },
             };
         }
@@ -709,6 +803,9 @@
 
                 const payload = buildSoftPayload();
 
+                markStep(els.softSteps, 0);
+                log(`Risk change detected → ${payload.property_address}`, 'ok');
+
                 updateRiskTable({
                     flood_defended_present: 'Medium',
                     flood_defended_longterm: 'Medium',
@@ -716,20 +813,18 @@
                     property_flood_category: 'Medium',
                 });
 
+                markStep(els.softSteps, 1);
+                const band = v(els.council_tax_band, 'D');
+                log(`Flood Re check → Eligible, Band ${band}, premium cap £${FLOOD_RE_PREMIUMS[band]}/yr, excess £250`, 'ok');
+
                 const result = await fireWebhook(webhookUrl, payload);
                 log(`Response: ${result.mode === 'opaque' ? 'sent (opaque)' : 'HTTP ' + result.status}`, result.ok ? 'ok' : 'err');
 
-                markStep(els.softSteps, 0);
-                log(`Risk event logged → flood risk moderate increase for ${payload.customer_name}`, 'ok');
-
-                markStep(els.softSteps, 1);
-                log(`Email built → property: ${payload.property_address}`, 'ok');
-
                 markStep(els.softSteps, 2);
-                log(`Email sent → ${payload.email}`, 'ok');
+                log(`Email sent → ${payload.email} with property page &amp; cover review advice`, 'ok');
 
                 markStep(els.softSteps, 3);
-                log('Engagement tracking active', 'ok');
+                log(`Flagged for advisor follow-up → ${payload.advisor_name} before renewal ${payload.renewal_date}`, 'ok');
 
                 setStatus(els.softStatus, '✓ Soft signal fired — email sent to policyholder', 'success');
             } catch (err) {
@@ -762,6 +857,9 @@
 
                 const payload = buildHardPayload();
 
+                markStep(els.hardSteps, 0);
+                log(`Severe escalation detected → flood insurance issue flagged for ${payload.property_address}`, 'ok');
+
                 updateRiskTable({
                     flood_defended_present: 'High',
                     flood_undefended_present: 'High',
@@ -774,18 +872,16 @@
                 const result = await fireWebhook(webhookUrl, payload);
                 log(`Response: ${result.mode === 'opaque' ? 'sent (opaque)' : 'HTTP ' + result.status}`, result.ok ? 'ok' : 'err');
 
-                markStep(els.hardSteps, 0);
-                log(`Risk event logged → flood risk severe escalation for ${payload.customer_name}`, 'ok');
-
                 setStatus(els.hardStatus, 'Voice agent call in progress...', 'pending');
                 markStep(els.hardSteps, 1);
-                log(`Voice agent call → ${payload.phone_number}`, 'ok');
+                log(`Voice agent call → ${payload.phone_number} from Flood Assist`, 'ok');
 
                 markStep(els.hardSteps, 2);
-                log('Agent explaining flood risk change to policyholder...', 'info');
+                const band = v(els.council_tax_band, 'D');
+                log(`Agent briefing: Flood Re cover (£${FLOOD_RE_PREMIUMS[band]}/yr cap), £250 excess, Build Back Better (£10k resilience)`, 'ok');
 
                 markStep(els.hardSteps, 3);
-                log('Transcript will be logged upon call completion', 'info');
+                log(`Offering callback from ${payload.advisor_name} on ${payload.advisor_phone}`, 'ok');
 
                 setStatus(els.hardStatus, '✓ Hard signal fired — voice call initiated', 'success');
             } catch (err) {
@@ -817,14 +913,15 @@
         els.clearConfig.addEventListener('click', clearConfigFn);
         els.clearLog.addEventListener('click', clearLog);
 
-        [...document.querySelectorAll('.field input')].forEach(el => {
+        [...document.querySelectorAll('.field input, .field select')].forEach(el => {
             el.addEventListener('change', () => { saveConfig(); updatePayloadPreviews(); });
         });
 
         loadConfig();
         updatePayloadPreviews();
-        log('Insurance Risk Monitoring demo ready — v2', 'info');
-        log('Market: UK | Focus: Flood Risk & Japanese Knotweed', 'info');
+        log('Flood Assist Risk Monitoring demo ready — v3', 'info');
+        log('Client: Flood Assist Insurance | Flood Re specialist | Build Back Better certified', 'info');
+        log('Monitoring: 7 flood/knotweed metrics + Flood Re eligibility', 'info');
     </script>
 </body>
 </html>
