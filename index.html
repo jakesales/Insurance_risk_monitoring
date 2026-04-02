@@ -14,20 +14,15 @@
             --text-primary: #1B2A4A;
             --text-secondary: #4A5E80;
             --text-muted: #8E9BB5;
-            --brand: #1A5FB4;
-            --brand-dark: #154A8F;
-            --brand-glow: rgba(26, 95, 180, 0.08);
-            --teal: #0D9488;
-            --teal-dark: #0F766E;
-            --teal-glow: rgba(13, 148, 136, 0.08);
+            --brand: #5AAFBD;
+            --brand-dark: #489BA8;
+            --brand-glow: rgba(90, 175, 189, 0.10);
             --amber: #D97706;
             --amber-dark: #B45309;
             --amber-glow: rgba(217, 119, 6, 0.08);
             --red: #DC2626;
             --red-dark: #B91C1C;
             --red-glow: rgba(220, 38, 38, 0.06);
-            --blue: #2563EB;
-            --blue-glow: rgba(37, 99, 235, 0.08);
             --green: #16A34A;
             --green-glow: rgba(22, 163, 74, 0.08);
             --border: #E2E6EE;
@@ -48,22 +43,21 @@
             line-height: 1.5;
         }
 
-        .container { max-width: 940px; margin: 0 auto; padding: 32px 24px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 28px 24px; }
 
         .header {
             display: flex; align-items: center; justify-content: space-between;
-            margin-bottom: 28px; padding-bottom: 20px; border-bottom: 2px solid var(--brand);
+            margin-bottom: 24px; padding-bottom: 18px; border-bottom: 2px solid var(--brand);
         }
-        .header-left h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--brand); }
-        .header-left p { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-logo { height: 44px; width: auto; }
+        .header-text h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); }
+        .header-text p { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
         .header-tag {
             font-size: 10px; font-weight: 700; text-transform: uppercase;
             letter-spacing: 0.1em; padding: 3px 8px; border-radius: var(--radius-sm);
-            background: var(--brand-glow); color: var(--brand); margin-left: 10px;
-            border: 1px solid rgba(26,95,180,0.15);
-        }
-        .header-sub {
-            font-size: 11px; color: var(--text-muted); margin-top: 2px;
+            background: var(--brand-glow); color: var(--brand); margin-left: 8px;
+            border: 1px solid rgba(90,175,189,0.2);
         }
 
         .status-badge {
@@ -81,108 +75,110 @@
 
         .card {
             background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--radius-lg); padding: 24px; margin-bottom: 20px;
+            border-radius: var(--radius-lg); padding: 20px; margin-bottom: 16px;
             box-shadow: var(--shadow);
         }
         .card-title {
-            font-size: 13px; font-weight: 600; text-transform: uppercase;
-            letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 16px;
+            font-size: 12px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 14px;
         }
 
         .context-banner {
-            background: var(--brand-glow); border: 1px solid rgba(26,95,180,0.12);
-            border-radius: var(--radius-md); padding: 14px 18px; margin-bottom: 20px;
-            font-size: 13px; color: var(--brand); line-height: 1.6;
+            background: var(--brand-glow); border: 1px solid rgba(90,175,189,0.15);
+            border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 16px;
+            font-size: 12px; color: var(--text-secondary); line-height: 1.6;
         }
-        .context-banner strong { font-weight: 700; }
-        .context-banner .detail { color: var(--text-secondary); font-size: 12px; margin-top: 4px; }
+        .context-banner strong { font-weight: 700; color: var(--brand-dark); }
 
-        .lead-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .lead-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-        .lead-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+        /* Two-column layout: risk metrics + policyholder side-by-side */
+        .row-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        .lead-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .lead-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .lead-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; }
 
         .field label {
-            display: block; font-size: 12px; font-weight: 500;
-            color: var(--text-secondary); margin-bottom: 6px;
+            display: block; font-size: 11px; font-weight: 500;
+            color: var(--text-secondary); margin-bottom: 4px;
         }
         .field label .var-hint {
             font-family: 'JetBrains Mono', 'SF Mono', monospace;
-            font-size: 10px; color: var(--text-muted); font-weight: 400;
+            font-size: 9px; color: var(--text-muted); font-weight: 400;
         }
         .field input, .field select {
-            width: 100%; padding: 10px 12px;
+            width: 100%; padding: 8px 10px;
             background: var(--input-bg); border: 1px solid var(--border);
             border-radius: var(--radius-md); color: var(--text-primary);
-            font-size: 14px; font-family: inherit; transition: border-color 0.15s;
+            font-size: 13px; font-family: inherit; transition: border-color 0.15s;
         }
         .field input:focus, .field select:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-glow); }
         .field input::placeholder { color: var(--text-muted); }
         .field select { cursor: pointer; }
 
-        .risk-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .risk-table { width: 100%; border-collapse: collapse; font-size: 12px; }
         .risk-table th {
-            text-align: left; padding: 8px 12px; font-weight: 600; font-size: 11px;
+            text-align: left; padding: 6px 8px; font-weight: 600; font-size: 10px;
             color: var(--text-secondary); border-bottom: 2px solid var(--border);
             text-transform: uppercase; letter-spacing: 0.05em;
         }
-        .risk-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        .risk-table td { padding: 7px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
         .risk-table tr:last-child td { border-bottom: none; }
-        .risk-table .metric-name { font-weight: 500; color: var(--text-primary); }
-        .risk-table .metric-icon { margin-right: 8px; }
+        .risk-table .metric-name { font-weight: 500; color: var(--text-primary); font-size: 11px; }
+        .risk-table .metric-icon { margin-right: 6px; font-size: 12px; }
 
         .rating-badge {
-            display: inline-block; padding: 3px 10px; border-radius: 20px;
-            font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
+            display: inline-block; padding: 2px 8px; border-radius: 20px;
+            font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
         }
         .rating-low { background: var(--green-glow); color: var(--green); border: 1px solid rgba(22,163,74,0.15); }
         .rating-medium { background: var(--amber-glow); color: var(--amber); border: 1px solid rgba(217,119,6,0.15); }
         .rating-high { background: var(--red-glow); color: var(--red); border: 1px solid rgba(220,38,38,0.15); }
         .rating-yes { background: var(--red-glow); color: var(--red); border: 1px solid rgba(220,38,38,0.15); }
         .rating-no { background: var(--green-glow); color: var(--green); border: 1px solid rgba(22,163,74,0.15); }
-        .rating-eligible { background: var(--brand-glow); color: var(--brand); border: 1px solid rgba(26,95,180,0.15); }
+        .rating-eligible { background: var(--brand-glow); color: var(--brand); border: 1px solid rgba(90,175,189,0.2); }
 
         .signal-card { position: relative; overflow: hidden; }
         .signal-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
         .signal-card.soft::before { background: var(--amber); }
         .signal-card.hard::before { background: var(--red); }
 
-        .signal-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
+        .signal-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
         .signal-icon {
-            width: 40px; height: 40px; border-radius: var(--radius-md);
+            width: 36px; height: 36px; border-radius: var(--radius-md);
             display: flex; align-items: center; justify-content: center;
-            font-size: 20px; flex-shrink: 0;
+            font-size: 18px; flex-shrink: 0;
         }
         .soft .signal-icon { background: var(--amber-glow); }
         .hard .signal-icon { background: var(--red-glow); }
-        .signal-info { flex: 1; margin-left: 14px; }
-        .signal-info h3 { font-size: 16px; font-weight: 600; color: var(--text-primary); }
-        .signal-info p { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+        .signal-info { flex: 1; margin-left: 12px; }
+        .signal-info h3 { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+        .signal-info p { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
         .signal-act {
-            font-size: 11px; font-weight: 600; text-transform: uppercase;
-            letter-spacing: 0.06em; padding: 4px 10px; border-radius: var(--radius-sm);
+            font-size: 10px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.06em; padding: 3px 8px; border-radius: var(--radius-sm);
         }
         .soft .signal-act { background: var(--amber-glow); color: var(--amber); }
         .hard .signal-act { background: var(--red-glow); color: var(--red); }
 
-        .signal-steps { list-style: none; margin: 16px 0; padding: 0; }
+        .signal-steps { list-style: none; margin: 12px 0; padding: 0; }
         .signal-steps li {
-            position: relative; padding: 6px 0 6px 24px;
-            font-size: 13px; color: var(--text-secondary);
+            position: relative; padding: 5px 0 5px 22px;
+            font-size: 12px; color: var(--text-secondary);
         }
         .signal-steps li::before {
-            content: ''; position: absolute; left: 6px; top: 50%; transform: translateY(-50%);
+            content: ''; position: absolute; left: 5px; top: 50%; transform: translateY(-50%);
             width: 6px; height: 6px; border-radius: 50%; border: 1.5px solid var(--text-muted);
         }
         .signal-steps li.done::before { background: var(--green); border-color: var(--green); }
 
         .trigger-btn {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            width: 100%; padding: 14px 24px; border: none; border-radius: var(--radius-md);
-            font-family: inherit; font-size: 14px; font-weight: 700; letter-spacing: 0.02em;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 12px 20px; border: none; border-radius: var(--radius-md);
+            font-family: inherit; font-size: 13px; font-weight: 700; letter-spacing: 0.02em;
             cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
         }
         .trigger-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .trigger-btn .btn-icon { font-size: 16px; }
+        .trigger-btn .btn-icon { font-size: 14px; }
         .soft .trigger-btn { background: var(--amber); color: #fff; }
         .soft .trigger-btn:hover:not(:disabled) { background: var(--amber-dark); }
         .hard .trigger-btn { background: var(--red); color: #fff; }
@@ -190,33 +186,33 @@
         .trigger-btn:active:not(:disabled) { transform: scale(0.98); }
 
         .signal-status {
-            display: flex; align-items: center; gap: 8px; margin-top: 12px;
-            font-size: 12px; font-weight: 500; color: var(--text-muted); min-height: 20px;
+            display: flex; align-items: center; gap: 8px; margin-top: 10px;
+            font-size: 11px; font-weight: 500; color: var(--text-muted); min-height: 18px;
         }
         .signal-status.success { color: var(--green); }
         .signal-status.error { color: var(--red); }
         .signal-status.pending { color: var(--amber); }
 
         .log-container {
-            max-height: 220px; overflow-y: auto;
+            max-height: 180px; overflow-y: auto;
             font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
-            font-size: 12px; line-height: 1.7;
+            font-size: 11px; line-height: 1.7;
         }
         .log-container::-webkit-scrollbar { width: 4px; }
         .log-container::-webkit-scrollbar-track { background: transparent; }
         .log-container::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
-        .log-entry { padding: 4px 0; border-bottom: 1px solid var(--border); display: flex; gap: 10px; }
+        .log-entry { padding: 3px 0; border-bottom: 1px solid var(--border); display: flex; gap: 8px; }
         .log-time { color: var(--text-muted); flex-shrink: 0; }
         .log-msg { flex: 1; }
         .log-msg.ok { color: var(--green); }
         .log-msg.err { color: var(--red); }
         .log-msg.warn { color: var(--amber); }
         .log-msg.info { color: var(--text-secondary); }
-        .log-empty { color: var(--text-muted); font-style: italic; padding: 12px 0; }
+        .log-empty { color: var(--text-muted); font-style: italic; padding: 10px 0; }
 
         .config-toggle {
-            display: flex; align-items: center; gap: 8px; padding: 10px 0;
-            cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text-secondary);
+            display: flex; align-items: center; gap: 8px; padding: 8px 0;
+            cursor: pointer; font-size: 12px; font-weight: 500; color: var(--text-secondary);
             border: none; background: none; font-family: inherit; transition: color 0.15s;
         }
         .config-toggle:hover { color: var(--text-primary); }
@@ -224,21 +220,21 @@
         .config-toggle.open .chevron { transform: rotate(90deg); }
         .config-body { display: none; padding-top: 12px; }
         .config-body.open { display: block; }
-        .config-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        .config-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+        .config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .config-actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
 
         .btn-secondary {
-            padding: 8px 18px; border-radius: var(--radius-md);
+            padding: 7px 16px; border-radius: var(--radius-md);
             border: 1px solid var(--border); background: var(--surface);
             color: var(--text-secondary); font-family: inherit;
-            font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s;
+            font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s;
         }
         .btn-secondary:hover { background: var(--surface-hover); color: var(--text-primary); border-color: var(--border-strong); }
 
         .btn-primary-sm {
-            padding: 8px 18px; border-radius: var(--radius-md); border: none;
+            padding: 7px 16px; border-radius: var(--radius-md); border: none;
             background: var(--brand); color: #fff; font-family: inherit;
-            font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+            font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s;
         }
         .btn-primary-sm:hover { background: var(--brand-dark); }
 
@@ -252,23 +248,27 @@
         .saved-toast.show { opacity: 1; transform: translateY(0); }
 
         .payload-preview {
-            margin-top: 12px; padding: 12px; background: var(--bg);
+            margin-top: 10px; padding: 10px; background: var(--bg);
             border: 1px solid var(--border); border-radius: var(--radius-md);
-            font-family: 'JetBrains Mono', 'SF Mono', monospace; font-size: 11px;
-            color: var(--text-secondary); white-space: pre-wrap; max-height: 180px;
+            font-family: 'JetBrains Mono', 'SF Mono', monospace; font-size: 10px;
+            color: var(--text-secondary); white-space: pre-wrap; max-height: 160px;
             overflow-y: auto; display: none;
         }
         .payload-preview.visible { display: block; }
 
         .section-divider {
-            display: flex; align-items: center; gap: 12px; margin: 8px 0 16px;
-            font-size: 11px; font-weight: 600; text-transform: uppercase;
+            display: flex; align-items: center; gap: 10px; margin: 6px 0 12px;
+            font-size: 10px; font-weight: 600; text-transform: uppercase;
             letter-spacing: 0.06em; color: var(--text-muted);
         }
         .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-        @media (max-width: 640px) {
+        @media (max-width: 900px) {
+            .row-2col { grid-template-columns: 1fr; }
             .lead-grid, .lead-grid-3, .lead-grid-4 { grid-template-columns: 1fr; }
+            .config-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 640px) {
             .header { flex-direction: column; align-items: flex-start; gap: 12px; }
         }
     </style>
@@ -278,9 +278,11 @@
 
         <div class="header">
             <div class="header-left">
-                <h1>Flood Assist<span class="header-tag">Demo</span></h1>
-                <p>Proactive Risk Monitoring — Backstage trigger UI</p>
-                <p class="header-sub">Powered by PriceHubble property intelligence</p>
+                <img src="logo.webp" alt="Flood Assist" class="header-logo">
+                <div class="header-text">
+                    <h1>Risk Monitoring<span class="header-tag">Demo</span></h1>
+                    <p>Powered by PriceHubble property intelligence</p>
+                </div>
             </div>
             <div class="status-badge">
                 <span class="status-dot"></span>
@@ -288,197 +290,179 @@
             </div>
         </div>
 
-        <!-- Client Context -->
         <div class="context-banner">
-            <strong>Flood Assist Insurance</strong> — UK's only specialist flood insurance broker. ~95% of clients in the Flood Re scheme. Direct access to Flood Re property database. Build Back Better certified.
-            <div class="detail">Scenario: A policyholder's flood risk profile has changed following updated Environment Agency mapping. Flood Assist uses PriceHubble monitoring to detect the change and proactively reach out before the customer's renewal.</div>
+            <strong>Flood Assist Insurance</strong> — UK's only specialist flood broker. ~95% of clients in Flood Re. Direct access to Flood Re property database. Build Back Better certified.
+            <br>Scenario: A policyholder's flood risk has changed following updated Environment Agency mapping. Flood Assist detects the change and proactively reaches out before renewal.
         </div>
 
-        <!-- Monitored Risk Metrics -->
-        <div class="card">
-            <div class="card-title">Monitored Risk Metrics — Current Baseline</div>
-            <table class="risk-table">
-                <thead>
-                    <tr>
-                        <th>Metric</th>
-                        <th>Current Rating</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="metric-name"><span class="metric-icon">🛡️</span>Flood Risk Rating (Combined Defended Present Day)</td>
-                        <td><span class="rating-badge rating-low">Low</span></td>
-                    </tr>
-                    <tr>
-                        <td class="metric-name"><span class="metric-icon">🌊</span>Flood Risk Rating (Combined Undefended Present Day)</td>
-                        <td><span class="rating-badge rating-medium">Medium</span></td>
-                    </tr>
-                    <tr>
-                        <td class="metric-name"><span class="metric-icon">🛡️</span>Flood Risk Rating (Combined Defended Long Term High Emissions)</td>
-                        <td><span class="rating-badge rating-low">Low</span></td>
-                    </tr>
-                    <tr>
-                        <td class="metric-name"><span class="metric-icon">🌊</span>Flood Risk Rating (Combined Undefended Long Term High Emissions)</td>
-                        <td><span class="rating-badge rating-medium">Medium</span></td>
-                    </tr>
-                    <tr>
-                        <td class="metric-name"><span class="metric-icon">🏠</span>Property Flood Risk Category</td>
-                        <td><span class="rating-badge rating-low">Low</span></td>
-                    </tr>
-                    <tr>
-                        <td class="metric-name"><span class="metric-icon">📋</span>Property has Flood Insurance Issue</td>
-                        <td><span class="rating-badge rating-no">No</span></td>
-                    </tr>
-                    <tr>
-                        <td class="metric-name"><span class="metric-icon">🌿</span>Japanese Knotweed Risk Rating</td>
-                        <td><span class="rating-badge rating-low">Low</span></td>
-                    </tr>
-                    <tr>
-                        <td class="metric-name"><span class="metric-icon">🔵</span>Flood Re Eligible</td>
-                        <td><span class="rating-badge rating-eligible">Eligible</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <!-- ROW 1: Risk Metrics + Policyholder side by side -->
+        <div class="row-2col">
 
-        <!-- Policyholder Information -->
-        <div class="card">
-            <div class="card-title">Policyholder Information</div>
-            <div class="section-divider">Contact details sent to ActivePieces</div>
-            <div class="lead-grid">
-                <div class="field">
-                    <label for="firstName">First Name <span class="var-hint">→ customer_first_name</span></label>
-                    <input type="text" id="firstName" value="Sarah" placeholder="e.g. Sarah">
-                </div>
-                <div class="field">
-                    <label for="lastName">Last Name <span class="var-hint">→ customer_last_name</span></label>
-                    <input type="text" id="lastName" value="Mitchell" placeholder="e.g. Mitchell">
-                </div>
-                <div class="field">
-                    <label for="phone_number">Phone Number <span class="var-hint">→ phone_number</span></label>
-                    <input type="tel" id="phone_number" value="+447700900123" placeholder="e.g. +447700900123">
-                </div>
-                <div class="field">
-                    <label for="email">Email <span class="var-hint">→ email</span></label>
-                    <input type="email" id="email" value="sarah.mitchell@example.co.uk" placeholder="e.g. sarah@example.co.uk">
-                </div>
-                <div class="field">
-                    <label for="property_address">Property Address <span class="var-hint">→ property_address</span></label>
-                    <input type="text" id="property_address" value="14 Riverside Crescent, Tewkesbury, GL20 5AB" placeholder="e.g. 14 Riverside Crescent, Tewkesbury">
-                </div>
-                <div class="field">
-                    <label for="policy_ref">Policy Reference <span class="var-hint">→ policy_ref</span></label>
-                    <input type="text" id="policy_ref" value="FA-2024-00847" placeholder="e.g. FA-2024-00847">
-                </div>
+            <!-- Left: Monitored Risk Metrics -->
+            <div class="card">
+                <div class="card-title">Monitored Risk Metrics</div>
+                <table class="risk-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="metric-name"><span class="metric-icon">🛡️</span>Defended Present Day</td>
+                            <td><span class="rating-badge rating-low">Low</span></td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name"><span class="metric-icon">🌊</span>Undefended Present Day</td>
+                            <td><span class="rating-badge rating-medium">Medium</span></td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name"><span class="metric-icon">🛡️</span>Defended Long Term (High Emissions)</td>
+                            <td><span class="rating-badge rating-low">Low</span></td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name"><span class="metric-icon">🌊</span>Undefended Long Term (High Emissions)</td>
+                            <td><span class="rating-badge rating-medium">Medium</span></td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name"><span class="metric-icon">🏠</span>Property Flood Risk Category</td>
+                            <td><span class="rating-badge rating-low">Low</span></td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name"><span class="metric-icon">📋</span>Flood Insurance Issue</td>
+                            <td><span class="rating-badge rating-no">No</span></td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name"><span class="metric-icon">🌿</span>Japanese Knotweed Risk</td>
+                            <td><span class="rating-badge rating-low">Low</span></td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name"><span class="metric-icon">🔵</span>Flood Re Eligible</td>
+                            <td><span class="rating-badge rating-eligible">Eligible</span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
-            <div class="section-divider" style="margin-top: 20px">Property &amp; policy context</div>
-            <div class="lead-grid-4">
-                <div class="field">
-                    <label for="council_tax_band">Council Tax Band <span class="var-hint">→ council_tax_band</span></label>
-                    <select id="council_tax_band">
-                        <option value="A">Band A</option>
-                        <option value="B">Band B</option>
-                        <option value="C">Band C</option>
-                        <option value="D" selected>Band D</option>
-                        <option value="E">Band E</option>
-                        <option value="F">Band F</option>
-                        <option value="G">Band G</option>
-                        <option value="H">Band H</option>
-                    </select>
+            <!-- Right: Policyholder Information -->
+            <div class="card">
+                <div class="card-title">Policyholder Information</div>
+                <div class="lead-grid">
+                    <div class="field">
+                        <label for="firstName">First Name <span class="var-hint">→ customer_first_name</span></label>
+                        <input type="text" id="firstName" value="Sarah" placeholder="e.g. Sarah">
+                    </div>
+                    <div class="field">
+                        <label for="lastName">Last Name <span class="var-hint">→ customer_last_name</span></label>
+                        <input type="text" id="lastName" value="Mitchell" placeholder="e.g. Mitchell">
+                    </div>
+                    <div class="field">
+                        <label for="phone_number">Phone <span class="var-hint">→ phone_number</span></label>
+                        <input type="tel" id="phone_number" value="+447700900123" placeholder="+44...">
+                    </div>
+                    <div class="field">
+                        <label for="email">Email <span class="var-hint">→ email</span></label>
+                        <input type="email" id="email" value="sarah.mitchell@example.co.uk" placeholder="email@example.co.uk">
+                    </div>
+                    <div class="field" style="grid-column: 1 / -1">
+                        <label for="property_address">Property Address <span class="var-hint">→ property_address</span></label>
+                        <input type="text" id="property_address" value="14 Riverside Crescent, Tewkesbury, GL20 5AB">
+                    </div>
                 </div>
-                <div class="field">
-                    <label for="cover_type">Cover Type</label>
-                    <select id="cover_type">
-                        <option value="buildings_contents" selected>Buildings &amp; Contents</option>
-                        <option value="buildings">Buildings Only</option>
-                        <option value="contents">Contents Only</option>
-                    </select>
-                </div>
-                <div class="field">
-                    <label for="flood_re_status">Flood Re Status</label>
-                    <select id="flood_re_status">
-                        <option value="eligible" selected>Eligible</option>
-                        <option value="in_scheme">In Scheme</option>
-                        <option value="not_eligible">Not Eligible</option>
-                        <option value="unknown">Unknown</option>
-                    </select>
-                </div>
-                <div class="field">
-                    <label for="renewal_date">Renewal Date</label>
-                    <input type="date" id="renewal_date" value="2026-09-15">
-                </div>
-            </div>
-
-            <div class="section-divider" style="margin-top: 20px">Flood Assist advisor &amp; voice agent</div>
-            <div class="lead-grid-3">
-                <div class="field">
-                    <label for="advisor_name">Flood Assist Advisor <span class="var-hint">→ advisor_name</span></label>
-                    <input type="text" id="advisor_name" value="Tom Bradley" placeholder="e.g. Tom Bradley">
-                </div>
-                <div class="field">
-                    <label for="advisor_phone">Advisor Direct Line</label>
-                    <input type="tel" id="advisor_phone" value="01832 770770" placeholder="e.g. 01832 770770">
-                </div>
-                <div class="field">
-                    <label for="agent_id">ElevenLabs Agent ID <span class="var-hint">→ agent_id</span></label>
-                    <input type="text" id="agent_id" value="" placeholder="agent_...">
+                <div class="section-divider" style="margin-top: 14px">Policy &amp; Flood Re</div>
+                <div class="lead-grid">
+                    <div class="field">
+                        <label for="policy_ref">Policy Ref</label>
+                        <input type="text" id="policy_ref" value="FA-2024-00847">
+                    </div>
+                    <div class="field">
+                        <label for="council_tax_band">Council Tax Band</label>
+                        <select id="council_tax_band">
+                            <option value="A">Band A</option><option value="B">Band B</option>
+                            <option value="C">Band C</option><option value="D" selected>Band D</option>
+                            <option value="E">Band E</option><option value="F">Band F</option>
+                            <option value="G">Band G</option><option value="H">Band H</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="cover_type">Cover Type</label>
+                        <select id="cover_type">
+                            <option value="buildings_contents" selected>Buildings &amp; Contents</option>
+                            <option value="buildings">Buildings Only</option>
+                            <option value="contents">Contents Only</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="flood_re_status">Flood Re Status</label>
+                        <select id="flood_re_status">
+                            <option value="eligible" selected>Eligible</option>
+                            <option value="in_scheme">In Scheme</option>
+                            <option value="not_eligible">Not Eligible</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="renewal_date">Renewal Date</label>
+                        <input type="date" id="renewal_date" value="2026-09-15">
+                    </div>
+                    <div class="field">
+                        <label for="advisor_name">Advisor <span class="var-hint">→ advisor_name</span></label>
+                        <input type="text" id="advisor_name" value="Tom Bradley">
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Act 2: Soft Signal — Flood Risk Moderate Change -->
-        <div class="card signal-card soft">
-            <div class="signal-header">
-                <div class="signal-icon">🌊</div>
-                <div class="signal-info">
-                    <h3>Flood Risk: Low → Medium</h3>
-                    <p>Soft signal — personalised email with cover review advice &amp; Flood Re guidance</p>
+        <!-- ROW 2: Two signal cards side by side -->
+        <div class="row-2col">
+
+            <!-- Soft Signal -->
+            <div class="card signal-card soft">
+                <div class="signal-header">
+                    <div class="signal-icon">🌊</div>
+                    <div class="signal-info">
+                        <h3>Flood Risk: Low → Medium</h3>
+                        <p>Soft signal — email with cover review &amp; Flood Re guidance</p>
+                    </div>
+                    <span class="signal-act">Email</span>
                 </div>
-                <span class="signal-act">Act 2</span>
+                <ul class="signal-steps" id="softSteps">
+                    <li>Detect risk change via PriceHubble monitoring</li>
+                    <li>Check Flood Re eligibility &amp; council tax band pricing</li>
+                    <li>Send personalised email with property page link</li>
+                    <li>Flag for advisor follow-up at renewal</li>
+                </ul>
+                <button class="trigger-btn" id="softTrigger">
+                    <span class="btn-icon">⚡</span>
+                    FIRE SOFT SIGNAL — LOW → MEDIUM
+                </button>
+                <div class="signal-status" id="softStatus"></div>
+                <div class="payload-preview" id="softPayloadPreview"></div>
             </div>
 
-            <ul class="signal-steps" id="softSteps">
-                <li>Detect risk change via PriceHubble monitoring</li>
-                <li>Check Flood Re eligibility &amp; council tax band pricing</li>
-                <li>Send personalised email: risk explanation + property page link</li>
-                <li>Track engagement &amp; flag for advisor follow-up at renewal</li>
-            </ul>
-
-            <button class="trigger-btn" id="softTrigger">
-                <span class="btn-icon">⚡</span>
-                FIRE SOFT SIGNAL — FLOOD RISK LOW → MEDIUM
-            </button>
-
-            <div class="signal-status" id="softStatus"></div>
-            <div class="payload-preview" id="softPayloadPreview"></div>
-        </div>
-
-        <!-- Act 3: Hard Signal — Flood Risk Severe Escalation -->
-        <div class="card signal-card hard">
-            <div class="signal-header">
-                <div class="signal-icon">🌊</div>
-                <div class="signal-info">
-                    <h3>Flood Risk: Low → High</h3>
-                    <p>Hard signal — AI voice call with urgent cover review &amp; Build Back Better options</p>
+            <!-- Hard Signal -->
+            <div class="card signal-card hard">
+                <div class="signal-header">
+                    <div class="signal-icon">🌊</div>
+                    <div class="signal-info">
+                        <h3>Flood Risk: Low → High</h3>
+                        <p>Hard signal — AI voice call with Build Back Better options</p>
+                    </div>
+                    <span class="signal-act">Voice</span>
                 </div>
-                <span class="signal-act">Act 3</span>
+                <ul class="signal-steps" id="hardSteps">
+                    <li>Detect severe escalation &amp; flood insurance issue</li>
+                    <li>Trigger AI voice agent call via ElevenLabs</li>
+                    <li>Explain Flood Re protection &amp; Build Back Better</li>
+                    <li>Offer immediate advisor callback</li>
+                </ul>
+                <button class="trigger-btn" id="hardTrigger">
+                    <span class="btn-icon">🌊</span>
+                    FIRE HARD SIGNAL — LOW → HIGH
+                </button>
+                <div class="signal-status" id="hardStatus"></div>
+                <div class="payload-preview" id="hardPayloadPreview"></div>
             </div>
-
-            <ul class="signal-steps" id="hardSteps">
-                <li>Detect severe risk escalation &amp; flood insurance issue flag</li>
-                <li>Trigger AI voice agent call via ElevenLabs</li>
-                <li>Agent explains risk change, Flood Re protection &amp; Build Back Better</li>
-                <li>Offer immediate advisor callback or appointment booking</li>
-            </ul>
-
-            <button class="trigger-btn" id="hardTrigger">
-                <span class="btn-icon">🌊</span>
-                FIRE HARD SIGNAL — FLOOD RISK LOW → HIGH
-            </button>
-
-            <div class="signal-status" id="hardStatus"></div>
-            <div class="payload-preview" id="hardPayloadPreview"></div>
         </div>
 
         <!-- Event Log -->
@@ -493,21 +477,29 @@
         <div class="card">
             <button class="config-toggle" id="configToggle">
                 <span class="chevron">▶</span>
-                Configuration — Webhook URLs &amp; Settings
+                Configuration — Webhooks, Voice Agent &amp; Settings
             </button>
             <div class="config-body" id="configBody">
                 <div class="config-grid">
                     <div class="field">
-                        <label for="webhookSoft">Webhook URL — Soft Signal (Flood Low→Medium → Email)</label>
+                        <label for="webhookSoft">Webhook URL — Soft Signal (Email)</label>
                         <input type="url" id="webhookSoft" value="" placeholder="https://pricehubble.activepieces.com/api/v1/webhooks/.../sync">
                     </div>
                     <div class="field">
-                        <label for="webhookHard">Webhook URL — Hard Signal (Flood Low→High → Voice Call)</label>
+                        <label for="webhookHard">Webhook URL — Hard Signal (Voice Call)</label>
                         <input type="url" id="webhookHard" value="" placeholder="https://pricehubble.activepieces.com/api/v1/webhooks/.../sync">
                     </div>
                     <div class="field">
-                        <label for="agent_phone_number_id">ElevenLabs Agent Phone Number ID</label>
+                        <label for="agent_id">ElevenLabs Agent ID</label>
+                        <input type="text" id="agent_id" value="" placeholder="agent_...">
+                    </div>
+                    <div class="field">
+                        <label for="agent_phone_number_id">ElevenLabs Phone Number ID</label>
                         <input type="text" id="agent_phone_number_id" value="" placeholder="phnum_...">
+                    </div>
+                    <div class="field">
+                        <label for="advisor_phone">Advisor Direct Line</label>
+                        <input type="tel" id="advisor_phone" value="01832 770770" placeholder="01832 770770">
                     </div>
                 </div>
                 <div class="config-actions">
@@ -524,7 +516,7 @@
     <div class="saved-toast" id="toast"></div>
 
     <script>
-        const STORAGE_KEY = 'fa-demo-config-v3';
+        const STORAGE_KEY = 'fa-demo-config-v4';
         const $ = id => document.getElementById(id);
 
         const els = {
@@ -548,14 +540,11 @@
             toast: $('toast'),
         };
 
-        const FLOOD_RE_PREMIUMS = {
-            A: 46, B: 46, C: 92, D: 138, E: 230, F: 368, G: 552, H: 552
-        };
+        const FLOOD_RE_PREMIUMS = { A: 46, B: 46, C: 92, D: 138, E: 230, F: 368, G: 552, H: 552 };
 
         const DEFAULTS = {
             firstName: 'Sarah', lastName: 'Mitchell',
-            phone_number: '+447700900123',
-            email: 'sarah.mitchell@example.co.uk',
+            phone_number: '+447700900123', email: 'sarah.mitchell@example.co.uk',
             property_address: '14 Riverside Crescent, Tewkesbury, GL20 5AB',
             policy_ref: 'FA-2024-00847',
             council_tax_band: 'D', cover_type: 'buildings_contents',
@@ -607,26 +596,11 @@
             els.logContainer.scrollTop = els.logContainer.scrollHeight;
         }
 
-        function clearLog() {
-            logEntries = [];
-            els.logContainer.innerHTML = '<div class="log-empty">Log cleared.</div>';
-        }
-
-        function setStatus(el, msg, level) {
-            el.textContent = msg;
-            el.className = `signal-status ${level}`;
-        }
-
-        function markStep(stepsEl, index) {
-            const items = stepsEl.querySelectorAll('li');
-            if (items[index]) items[index].classList.add('done');
-        }
-
-        function resetSteps(stepsEl) {
-            stepsEl.querySelectorAll('li').forEach(li => li.classList.remove('done'));
-        }
-
-        function v(el, fallback) { return (el && el.value) || fallback || ''; }
+        function clearLog() { logEntries = []; els.logContainer.innerHTML = '<div class="log-empty">Log cleared.</div>'; }
+        function setStatus(el, msg, level) { el.textContent = msg; el.className = `signal-status ${level}`; }
+        function markStep(stepsEl, i) { const items = stepsEl.querySelectorAll('li'); if (items[i]) items[i].classList.add('done'); }
+        function resetSteps(stepsEl) { stepsEl.querySelectorAll('li').forEach(li => li.classList.remove('done')); }
+        function v(el, fb) { return (el && el.value) || fb || ''; }
 
         const RISK_METRICS = {
             flood_defended_present: 'Flood Risk Rating (Combined Defended Present Day Scenario)',
@@ -640,8 +614,8 @@
 
         function updateRiskTable(changes) {
             const rows = document.querySelectorAll('.risk-table tbody tr');
-            const metricKeys = [...Object.keys(RISK_METRICS), 'flood_re'];
-            metricKeys.forEach((key, i) => {
+            const keys = [...Object.keys(RISK_METRICS), 'flood_re'];
+            keys.forEach((key, i) => {
                 if (changes[key] && rows[i]) {
                     const cell = rows[i].querySelector('td:last-child');
                     const val = changes[key];
@@ -655,28 +629,18 @@
         }
 
         function buildSoftPayload() {
-            const firstName = v(els.firstName, DEFAULTS.firstName);
-            const lastName = v(els.lastName, DEFAULTS.lastName);
+            const fn = v(els.firstName, DEFAULTS.firstName), ln = v(els.lastName, DEFAULTS.lastName);
             const addr = v(els.property_address, DEFAULTS.property_address);
             const band = v(els.council_tax_band, 'D');
             return {
-                signal_type: 'flood_risk_moderate_increase',
-                severity: 'medium',
-                broker: 'Flood Assist Insurance',
-                customer_first_name: firstName,
-                customer_last_name: lastName,
-                customer_name: `${firstName} ${lastName}`.trim(),
-                phone_number: v(els.phone_number, DEFAULTS.phone_number),
-                email: v(els.email, DEFAULTS.email),
-                property_address: addr,
-                policy_ref: v(els.policy_ref, DEFAULTS.policy_ref),
-                council_tax_band: band,
-                flood_re_premium_cap: `£${FLOOD_RE_PREMIUMS[band] || '—'}`,
-                flood_re_status: v(els.flood_re_status, 'eligible'),
-                cover_type: v(els.cover_type, 'buildings_contents'),
+                signal_type: 'flood_risk_moderate_increase', severity: 'medium', broker: 'Flood Assist Insurance',
+                customer_first_name: fn, customer_last_name: ln, customer_name: `${fn} ${ln}`.trim(),
+                phone_number: v(els.phone_number, DEFAULTS.phone_number), email: v(els.email, DEFAULTS.email),
+                property_address: addr, policy_ref: v(els.policy_ref, DEFAULTS.policy_ref),
+                council_tax_band: band, flood_re_premium_cap: `£${FLOOD_RE_PREMIUMS[band] || '—'}`,
+                flood_re_status: v(els.flood_re_status, 'eligible'), cover_type: v(els.cover_type, 'buildings_contents'),
                 renewal_date: v(els.renewal_date, DEFAULTS.renewal_date),
-                advisor_name: v(els.advisor_name, DEFAULTS.advisor_name),
-                advisor_phone: v(els.advisor_phone, DEFAULTS.advisor_phone),
+                advisor_name: v(els.advisor_name, DEFAULTS.advisor_name), advisor_phone: v(els.advisor_phone, DEFAULTS.advisor_phone),
                 risk_metrics: {
                     flood_defended_present: { previous: 'Low', new: 'Medium', metric: RISK_METRICS.flood_defended_present },
                     flood_undefended_present: { previous: 'Medium', new: 'Medium', metric: RISK_METRICS.flood_undefended_present },
@@ -688,44 +652,30 @@
                 },
                 risk_change: {
                     title: 'Flood risk increased from Low to Medium',
-                    description: `Updated Environment Agency modelling shows increased surface water and river flood exposure for ${addr}. The defended present-day scenario has moved from Low to Medium, indicating rising risk even with existing flood defences in place.`,
-                    recommendation: `As a Flood Assist client your cover remains protected under the Flood Re scheme — your flood premium is capped at £${FLOOD_RE_PREMIUMS[band] || '—'}/year for Band ${band}. We recommend reviewing your cover ahead of your renewal to ensure it reflects the latest risk profile. Your dedicated advisor ${v(els.advisor_name, DEFAULTS.advisor_name)} is available on ${v(els.advisor_phone, DEFAULTS.advisor_phone)}.`,
+                    description: `Updated Environment Agency modelling shows increased flood exposure for ${addr}. The defended present-day scenario has moved from Low to Medium.`,
+                    recommendation: `Your flood premium remains capped at £${FLOOD_RE_PREMIUMS[band]}/year under Flood Re (Band ${band}). We recommend reviewing your cover ahead of renewal. Your advisor ${v(els.advisor_name, DEFAULTS.advisor_name)} is available on ${v(els.advisor_phone, DEFAULTS.advisor_phone)}.`,
                 },
             };
         }
 
         function buildHardPayload() {
-            const firstName = v(els.firstName, DEFAULTS.firstName);
-            const lastName = v(els.lastName, DEFAULTS.lastName);
+            const fn = v(els.firstName, DEFAULTS.firstName), ln = v(els.lastName, DEFAULTS.lastName);
             const addr = v(els.property_address, DEFAULTS.property_address);
             const band = v(els.council_tax_band, 'D');
             return {
-                signal_type: 'flood_risk_severe_escalation',
-                severity: 'high',
-                broker: 'Flood Assist Insurance',
-                customer_first_name: firstName,
-                customer_last_name: lastName,
-                customer_name: `${firstName} ${lastName}`.trim(),
-                phone_number: v(els.phone_number, DEFAULTS.phone_number),
-                email: v(els.email, DEFAULTS.email),
-                property_address: addr,
-                policy_ref: v(els.policy_ref, DEFAULTS.policy_ref),
-                council_tax_band: band,
-                flood_re_premium_cap: `£${FLOOD_RE_PREMIUMS[band] || '—'}`,
-                flood_re_status: v(els.flood_re_status, 'eligible'),
-                cover_type: v(els.cover_type, 'buildings_contents'),
+                signal_type: 'flood_risk_severe_escalation', severity: 'high', broker: 'Flood Assist Insurance',
+                customer_first_name: fn, customer_last_name: ln, customer_name: `${fn} ${ln}`.trim(),
+                phone_number: v(els.phone_number, DEFAULTS.phone_number), email: v(els.email, DEFAULTS.email),
+                property_address: addr, policy_ref: v(els.policy_ref, DEFAULTS.policy_ref),
+                council_tax_band: band, flood_re_premium_cap: `£${FLOOD_RE_PREMIUMS[band] || '—'}`,
+                flood_re_status: v(els.flood_re_status, 'eligible'), cover_type: v(els.cover_type, 'buildings_contents'),
                 renewal_date: v(els.renewal_date, DEFAULTS.renewal_date),
-                advisor_name: v(els.advisor_name, DEFAULTS.advisor_name),
-                advisor_phone: v(els.advisor_phone, DEFAULTS.advisor_phone),
+                advisor_name: v(els.advisor_name, DEFAULTS.advisor_name), advisor_phone: v(els.advisor_phone, DEFAULTS.advisor_phone),
                 agent_id: v(els.agent_id, DEFAULTS.agent_id),
                 agent_phone_number_id: v(els.agent_phone_number_id, DEFAULTS.agent_phone_number_id),
                 language_spoken: 'en-GB',
-                first_message: `Hello, is this ${firstName}? I'm calling from Flood Assist Insurance.`,
-                build_back_better: {
-                    eligible: true,
-                    allowance: '£10,000',
-                    description: 'Up to £10,000 for flood resilience measures over and above standard repair costs, available through Flood Re\'s Build Back Better initiative.',
-                },
+                first_message: `Hello, is this ${fn}? I'm calling from Flood Assist Insurance.`,
+                build_back_better: { eligible: true, allowance: '£10,000', description: 'Up to £10,000 for flood resilience measures through Flood Re\'s Build Back Better initiative.' },
                 risk_metrics: {
                     flood_defended_present: { previous: 'Low', new: 'High', metric: RISK_METRICS.flood_defended_present },
                     flood_undefended_present: { previous: 'Medium', new: 'High', metric: RISK_METRICS.flood_undefended_present },
@@ -737,8 +687,8 @@
                 },
                 risk_change: {
                     title: 'Flood risk escalated from Low to High — flood insurance issue flagged',
-                    description: `${addr} has been reclassified as High flood risk across all Environment Agency scenarios. A flood insurance issue has been flagged, meaning standard insurers may decline cover. As a Flood Re specialist, Flood Assist can ensure continued cover.`,
-                    recommendation: `Urgent review required. Your property now qualifies for Flood Re protection — flood premium capped at £${FLOOD_RE_PREMIUMS[band] || '—'}/year (Band ${band}), excess fixed at £250. You may also be eligible for up to £10,000 in flood resilience improvements through Build Back Better. Contact ${v(els.advisor_name, DEFAULTS.advisor_name)} immediately on ${v(els.advisor_phone, DEFAULTS.advisor_phone)}.`,
+                    description: `${addr} has been reclassified as High flood risk across all scenarios. A flood insurance issue has been flagged. As a Flood Re specialist, Flood Assist can ensure continued cover.`,
+                    recommendation: `Urgent review required. Flood premium capped at £${FLOOD_RE_PREMIUMS[band]}/year (Band ${band}), excess £250. Eligible for up to £10,000 in flood resilience via Build Back Better. Contact ${v(els.advisor_name, DEFAULTS.advisor_name)} on ${v(els.advisor_phone, DEFAULTS.advisor_phone)}.`,
                 },
             };
         }
@@ -750,178 +700,75 @@
 
         async function fireWebhook(url, payload) {
             log(`POST → ${url.replace(/webhooks\/.*/, 'webhooks/...')}`, 'info');
-            const jsonBody = JSON.stringify(payload);
-
+            const body = JSON.stringify(payload);
             try {
-                const resp = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: jsonBody,
-                });
-                let body = null;
-                try { body = await resp.json(); } catch (_) {}
-                return { status: resp.status, body, ok: resp.ok, mode: 'cors' };
-            } catch (corsErr) {
-                log('CORS preflight blocked — retrying as text/plain', 'warn');
+                const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body });
+                let d = null; try { d = await r.json(); } catch (_) {}
+                return { status: r.status, body: d, ok: r.ok, mode: 'cors' };
+            } catch (_) {
+                log('CORS blocked — retrying as text/plain', 'warn');
                 try {
-                    const resp = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'text/plain' },
-                        body: jsonBody,
-                    });
-                    let body = null;
-                    try { body = await resp.json(); } catch (_) {}
-                    return { status: resp.status, body, ok: resp.ok, mode: 'text-plain' };
+                    const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body });
+                    let d = null; try { d = await r.json(); } catch (_) {}
+                    return { status: r.status, body: d, ok: r.ok, mode: 'text-plain' };
                 } catch (_) {
-                    log('Response blocked by CORS but request was sent — webhook triggered', 'warn');
+                    log('CORS opaque — webhook likely sent', 'warn');
                     return { status: 0, body: null, ok: true, mode: 'opaque' };
                 }
             }
         }
 
-        let softFiring = false;
-        let hardFiring = false;
+        let softFiring = false, hardFiring = false;
 
         async function fireSoftSignal() {
-            if (softFiring) return;
-            softFiring = true;
-            els.softTrigger.disabled = true;
-            resetSteps(els.softSteps);
-
-            const webhookUrl = els.webhookSoft.value;
-            if (!webhookUrl) {
-                setStatus(els.softStatus, '✗ No webhook URL configured — open Configuration below', 'error');
-                log('Soft signal FAILED — no webhook URL', 'err');
-                els.softTrigger.disabled = false;
-                softFiring = false;
-                return;
-            }
-
+            if (softFiring) return; softFiring = true; els.softTrigger.disabled = true; resetSteps(els.softSteps);
+            const url = els.webhookSoft.value;
+            if (!url) { setStatus(els.softStatus, '✗ No webhook URL — open Configuration', 'error'); log('Soft signal FAILED — no webhook URL', 'err'); els.softTrigger.disabled = false; softFiring = false; return; }
             try {
-                setStatus(els.softStatus, 'Firing soft signal...', 'pending');
-                log('⚡ Firing soft signal → Flood risk Low → Medium', 'warn');
-
-                const payload = buildSoftPayload();
-
-                markStep(els.softSteps, 0);
-                log(`Risk change detected → ${payload.property_address}`, 'ok');
-
-                updateRiskTable({
-                    flood_defended_present: 'Medium',
-                    flood_defended_longterm: 'Medium',
-                    flood_undefended_longterm: 'High',
-                    property_flood_category: 'Medium',
-                });
-
-                markStep(els.softSteps, 1);
+                setStatus(els.softStatus, 'Firing...', 'pending'); log('⚡ Soft signal → Flood risk Low → Medium', 'warn');
+                const p = buildSoftPayload(); markStep(els.softSteps, 0); log(`Risk change detected → ${p.property_address}`, 'ok');
+                updateRiskTable({ flood_defended_present: 'Medium', flood_defended_longterm: 'Medium', flood_undefended_longterm: 'High', property_flood_category: 'Medium' });
                 const band = v(els.council_tax_band, 'D');
-                log(`Flood Re check → Eligible, Band ${band}, premium cap £${FLOOD_RE_PREMIUMS[band]}/yr, excess £250`, 'ok');
-
-                const result = await fireWebhook(webhookUrl, payload);
-                log(`Response: ${result.mode === 'opaque' ? 'sent (opaque)' : 'HTTP ' + result.status}`, result.ok ? 'ok' : 'err');
-
-                markStep(els.softSteps, 2);
-                log(`Email sent → ${payload.email} with property page &amp; cover review advice`, 'ok');
-
-                markStep(els.softSteps, 3);
-                log(`Flagged for advisor follow-up → ${payload.advisor_name} before renewal ${payload.renewal_date}`, 'ok');
-
-                setStatus(els.softStatus, '✓ Soft signal fired — email sent to policyholder', 'success');
-            } catch (err) {
-                setStatus(els.softStatus, `✗ Failed: ${err.message}`, 'error');
-                log(`Soft signal FAILED: ${err.message}`, 'err');
-            } finally {
-                els.softTrigger.disabled = false;
-                softFiring = false;
-            }
+                markStep(els.softSteps, 1); log(`Flood Re → Eligible, Band ${band}, cap £${FLOOD_RE_PREMIUMS[band]}/yr`, 'ok');
+                const r = await fireWebhook(url, p); log(`Response: ${r.mode === 'opaque' ? 'sent (opaque)' : 'HTTP ' + r.status}`, r.ok ? 'ok' : 'err');
+                markStep(els.softSteps, 2); log(`Email sent → ${p.email}`, 'ok');
+                markStep(els.softSteps, 3); log(`Flagged → ${p.advisor_name} before renewal ${p.renewal_date}`, 'ok');
+                setStatus(els.softStatus, '✓ Email sent to policyholder', 'success');
+            } catch (e) { setStatus(els.softStatus, `✗ ${e.message}`, 'error'); log(`FAILED: ${e.message}`, 'err'); }
+            finally { els.softTrigger.disabled = false; softFiring = false; }
         }
 
         async function fireHardSignal() {
-            if (hardFiring) return;
-            hardFiring = true;
-            els.hardTrigger.disabled = true;
-            resetSteps(els.hardSteps);
-
-            const webhookUrl = els.webhookHard.value;
-            if (!webhookUrl) {
-                setStatus(els.hardStatus, '✗ No webhook URL configured — open Configuration below', 'error');
-                log('Hard signal FAILED — no webhook URL', 'err');
-                els.hardTrigger.disabled = false;
-                hardFiring = false;
-                return;
-            }
-
+            if (hardFiring) return; hardFiring = true; els.hardTrigger.disabled = true; resetSteps(els.hardSteps);
+            const url = els.webhookHard.value;
+            if (!url) { setStatus(els.hardStatus, '✗ No webhook URL — open Configuration', 'error'); log('Hard signal FAILED — no webhook URL', 'err'); els.hardTrigger.disabled = false; hardFiring = false; return; }
             try {
-                setStatus(els.hardStatus, 'Firing hard signal...', 'pending');
-                log('🌊 Firing hard signal → Flood risk Low → High', 'warn');
-
-                const payload = buildHardPayload();
-
-                markStep(els.hardSteps, 0);
-                log(`Severe escalation detected → flood insurance issue flagged for ${payload.property_address}`, 'ok');
-
-                updateRiskTable({
-                    flood_defended_present: 'High',
-                    flood_undefended_present: 'High',
-                    flood_defended_longterm: 'High',
-                    flood_undefended_longterm: 'High',
-                    property_flood_category: 'High',
-                    flood_insurance_issue: 'Yes',
-                });
-
-                const result = await fireWebhook(webhookUrl, payload);
-                log(`Response: ${result.mode === 'opaque' ? 'sent (opaque)' : 'HTTP ' + result.status}`, result.ok ? 'ok' : 'err');
-
-                setStatus(els.hardStatus, 'Voice agent call in progress...', 'pending');
-                markStep(els.hardSteps, 1);
-                log(`Voice agent call → ${payload.phone_number} from Flood Assist`, 'ok');
-
-                markStep(els.hardSteps, 2);
+                setStatus(els.hardStatus, 'Firing...', 'pending'); log('🌊 Hard signal → Flood risk Low → High', 'warn');
+                const p = buildHardPayload(); markStep(els.hardSteps, 0); log(`Severe escalation → flood insurance issue flagged`, 'ok');
+                updateRiskTable({ flood_defended_present: 'High', flood_undefended_present: 'High', flood_defended_longterm: 'High', flood_undefended_longterm: 'High', property_flood_category: 'High', flood_insurance_issue: 'Yes' });
+                const r = await fireWebhook(url, p); log(`Response: ${r.mode === 'opaque' ? 'sent (opaque)' : 'HTTP ' + r.status}`, r.ok ? 'ok' : 'err');
+                setStatus(els.hardStatus, 'Voice call in progress...', 'pending');
+                markStep(els.hardSteps, 1); log(`Voice call → ${p.phone_number}`, 'ok');
                 const band = v(els.council_tax_band, 'D');
-                log(`Agent briefing: Flood Re cover (£${FLOOD_RE_PREMIUMS[band]}/yr cap), £250 excess, Build Back Better (£10k resilience)`, 'ok');
-
-                markStep(els.hardSteps, 3);
-                log(`Offering callback from ${payload.advisor_name} on ${payload.advisor_phone}`, 'ok');
-
-                setStatus(els.hardStatus, '✓ Hard signal fired — voice call initiated', 'success');
-            } catch (err) {
-                setStatus(els.hardStatus, `✗ Failed: ${err.message}`, 'error');
-                log(`Hard signal FAILED: ${err.message}`, 'err');
-            } finally {
-                els.hardTrigger.disabled = false;
-                hardFiring = false;
-            }
+                markStep(els.hardSteps, 2); log(`Flood Re (£${FLOOD_RE_PREMIUMS[band]}/yr), Build Back Better (£10k)`, 'ok');
+                markStep(els.hardSteps, 3); log(`Callback offered → ${p.advisor_name} on ${p.advisor_phone}`, 'ok');
+                setStatus(els.hardStatus, '✓ Voice call initiated', 'success');
+            } catch (e) { setStatus(els.hardStatus, `✗ ${e.message}`, 'error'); log(`FAILED: ${e.message}`, 'err'); }
+            finally { els.hardTrigger.disabled = false; hardFiring = false; }
         }
 
-        els.configToggle.addEventListener('click', () => {
-            const open = els.configBody.classList.toggle('open');
-            els.configToggle.classList.toggle('open', open);
-        });
-
+        els.configToggle.addEventListener('click', () => { const o = els.configBody.classList.toggle('open'); els.configToggle.classList.toggle('open', o); });
         let payloadsVisible = false;
-        els.togglePayloads.addEventListener('click', () => {
-            payloadsVisible = !payloadsVisible;
-            updatePayloadPreviews();
-            els.softPayloadPreview.classList.toggle('visible', payloadsVisible);
-            els.hardPayloadPreview.classList.toggle('visible', payloadsVisible);
-            els.togglePayloads.textContent = payloadsVisible ? 'Hide Payloads' : 'Show Payloads';
-        });
-
+        els.togglePayloads.addEventListener('click', () => { payloadsVisible = !payloadsVisible; updatePayloadPreviews(); els.softPayloadPreview.classList.toggle('visible', payloadsVisible); els.hardPayloadPreview.classList.toggle('visible', payloadsVisible); els.togglePayloads.textContent = payloadsVisible ? 'Hide Payloads' : 'Show Payloads'; });
         els.softTrigger.addEventListener('click', fireSoftSignal);
         els.hardTrigger.addEventListener('click', fireHardSignal);
         els.saveConfig.addEventListener('click', saveConfig);
         els.clearConfig.addEventListener('click', clearConfigFn);
         els.clearLog.addEventListener('click', clearLog);
-
-        [...document.querySelectorAll('.field input, .field select')].forEach(el => {
-            el.addEventListener('change', () => { saveConfig(); updatePayloadPreviews(); });
-        });
-
-        loadConfig();
-        updatePayloadPreviews();
-        log('Flood Assist Risk Monitoring demo ready — v3', 'info');
-        log('Client: Flood Assist Insurance | Flood Re specialist | Build Back Better certified', 'info');
-        log('Monitoring: 7 flood/knotweed metrics + Flood Re eligibility', 'info');
+        [...document.querySelectorAll('.field input, .field select')].forEach(el => { el.addEventListener('change', () => { saveConfig(); updatePayloadPreviews(); }); });
+        loadConfig(); updatePayloadPreviews();
+        log('Flood Assist Risk Monitoring — v4', 'info');
+        log('Flood Re specialist | Build Back Better | 8 monitored metrics', 'info');
     </script>
 </body>
 </html>
