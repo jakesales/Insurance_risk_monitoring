@@ -8,30 +8,33 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --bg: #0C1222;
-            --surface: #162032;
-            --surface-hover: #1E2D45;
-            --text-primary: #F0F4F8;
-            --text-secondary: #8B9DC3;
-            --text-muted: #5A7099;
-            --teal: #14B8A6;
-            --teal-dark: #0D9488;
-            --teal-glow: rgba(20, 184, 166, 0.15);
-            --amber: #F59E0B;
-            --amber-dark: #D97706;
-            --amber-glow: rgba(245, 158, 11, 0.15);
-            --red: #EF4444;
-            --red-dark: #DC2626;
-            --red-glow: rgba(239, 68, 68, 0.15);
-            --blue: #3B82F6;
-            --blue-glow: rgba(59, 130, 246, 0.15);
-            --green: #22C55E;
-            --green-glow: rgba(34, 197, 94, 0.15);
-            --border: #1E2D45;
-            --input-bg: #0C1222;
+            --bg: #F8F9FB;
+            --surface: #FFFFFF;
+            --surface-hover: #F1F3F7;
+            --text-primary: #1A1D23;
+            --text-secondary: #5F6B7A;
+            --text-muted: #9CA3AF;
+            --teal: #0D9488;
+            --teal-dark: #0F766E;
+            --teal-glow: rgba(13, 148, 136, 0.08);
+            --amber: #D97706;
+            --amber-dark: #B45309;
+            --amber-glow: rgba(217, 119, 6, 0.08);
+            --red: #DC2626;
+            --red-dark: #B91C1C;
+            --red-glow: rgba(220, 38, 38, 0.08);
+            --blue: #2563EB;
+            --blue-glow: rgba(37, 99, 235, 0.08);
+            --green: #16A34A;
+            --green-glow: rgba(22, 163, 74, 0.08);
+            --border: #E5E7EB;
+            --border-strong: #D1D5DB;
+            --input-bg: #FFFFFF;
             --radius-lg: 12px;
             --radius-md: 8px;
             --radius-sm: 6px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.04);
         }
 
         body {
@@ -42,13 +45,13 @@
             line-height: 1.5;
         }
 
-        .container { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+        .container { max-width: 920px; margin: 0 auto; padding: 32px 24px; }
 
         .header {
             display: flex; align-items: center; justify-content: space-between;
             margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border);
         }
-        .header-left h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+        .header-left h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); }
         .header-left p { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
         .header-tag {
             font-size: 11px; font-weight: 600; text-transform: uppercase;
@@ -61,7 +64,7 @@
             padding: 6px 14px; border-radius: 20px;
             font-size: 12px; font-weight: 600;
             background: var(--green-glow); color: var(--green);
-            border: 1px solid rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(22, 163, 74, 0.15);
         }
         .status-dot {
             width: 8px; height: 8px; border-radius: 50%;
@@ -72,6 +75,7 @@
         .card {
             background: var(--surface); border: 1px solid var(--border);
             border-radius: var(--radius-lg); padding: 24px; margin-bottom: 20px;
+            box-shadow: var(--shadow);
         }
         .card-title {
             font-size: 13px; font-weight: 600; text-transform: uppercase;
@@ -95,8 +99,29 @@
             border-radius: var(--radius-md); color: var(--text-primary);
             font-size: 14px; font-family: inherit; transition: border-color 0.15s;
         }
-        .field input:focus, .field select:focus { outline: none; border-color: var(--teal); }
+        .field input:focus, .field select:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-glow); }
         .field input::placeholder { color: var(--text-muted); }
+
+        .risk-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .risk-table th {
+            text-align: left; padding: 8px 12px; font-weight: 600; font-size: 12px;
+            color: var(--text-secondary); border-bottom: 2px solid var(--border);
+            text-transform: uppercase; letter-spacing: 0.04em;
+        }
+        .risk-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        .risk-table tr:last-child td { border-bottom: none; }
+        .risk-table .metric-name { font-weight: 500; color: var(--text-primary); }
+        .risk-table .metric-icon { margin-right: 8px; }
+
+        .rating-badge {
+            display: inline-block; padding: 3px 10px; border-radius: 20px;
+            font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
+        }
+        .rating-low { background: var(--green-glow); color: var(--green); border: 1px solid rgba(22,163,74,0.15); }
+        .rating-medium { background: var(--amber-glow); color: var(--amber); border: 1px solid rgba(217,119,6,0.15); }
+        .rating-high { background: var(--red-glow); color: var(--red); border: 1px solid rgba(220,38,38,0.15); }
+        .rating-yes { background: var(--red-glow); color: var(--red); border: 1px solid rgba(220,38,38,0.15); }
+        .rating-no { background: var(--green-glow); color: var(--green); border: 1px solid rgba(22,163,74,0.15); }
 
         .signal-card { position: relative; overflow: hidden; }
         .signal-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
@@ -112,7 +137,7 @@
         .soft .signal-icon { background: var(--amber-glow); }
         .hard .signal-icon { background: var(--red-glow); }
         .signal-info { flex: 1; margin-left: 14px; }
-        .signal-info h3 { font-size: 16px; font-weight: 600; }
+        .signal-info h3 { font-size: 16px; font-weight: 600; color: var(--text-primary); }
         .signal-info p { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
         .signal-act {
             font-size: 11px; font-weight: 600; text-transform: uppercase;
@@ -140,7 +165,7 @@
         }
         .trigger-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .trigger-btn .btn-icon { font-size: 16px; }
-        .soft .trigger-btn { background: var(--amber); color: #000; }
+        .soft .trigger-btn { background: var(--amber); color: #fff; }
         .soft .trigger-btn:hover:not(:disabled) { background: var(--amber-dark); }
         .hard .trigger-btn { background: var(--red); color: #fff; }
         .hard .trigger-btn:hover:not(:disabled) { background: var(--red-dark); }
@@ -154,17 +179,6 @@
         .signal-status.error { color: var(--red); }
         .signal-status.pending { color: var(--amber); }
 
-        .risk-badges { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
-        .risk-badge {
-            display: flex; align-items: center; gap: 5px;
-            padding: 4px 10px; border-radius: 20px;
-            font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
-            background: var(--surface-hover); color: var(--text-secondary);
-            border: 1px solid var(--border);
-        }
-        .risk-badge.active { border-color: var(--teal); color: var(--teal); background: var(--teal-glow); }
-        .risk-badge .risk-icon { font-size: 13px; }
-
         .log-container {
             max-height: 220px; overflow-y: auto;
             font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
@@ -172,8 +186,8 @@
         }
         .log-container::-webkit-scrollbar { width: 4px; }
         .log-container::-webkit-scrollbar-track { background: transparent; }
-        .log-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-        .log-entry { padding: 4px 0; border-bottom: 1px solid rgba(30, 45, 69, 0.6); display: flex; gap: 10px; }
+        .log-container::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+        .log-entry { padding: 4px 0; border-bottom: 1px solid var(--border); display: flex; gap: 10px; }
         .log-time { color: var(--text-muted); flex-shrink: 0; }
         .log-msg { flex: 1; }
         .log-msg.ok { color: var(--green); }
@@ -197,29 +211,30 @@
 
         .btn-secondary {
             padding: 8px 18px; border-radius: var(--radius-md);
-            border: 1px solid var(--border); background: transparent;
+            border: 1px solid var(--border); background: var(--surface);
             color: var(--text-secondary); font-family: inherit;
             font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s;
         }
-        .btn-secondary:hover { background: var(--surface-hover); color: var(--text-primary); }
+        .btn-secondary:hover { background: var(--surface-hover); color: var(--text-primary); border-color: var(--border-strong); }
 
         .btn-primary-sm {
             padding: 8px 18px; border-radius: var(--radius-md); border: none;
-            background: var(--teal); color: #000; font-family: inherit;
+            background: var(--teal); color: #fff; font-family: inherit;
             font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s;
         }
         .btn-primary-sm:hover { background: var(--teal-dark); }
 
         .saved-toast {
             position: fixed; bottom: 24px; right: 24px; padding: 10px 20px;
-            background: var(--green); color: #000; font-size: 13px; font-weight: 600;
+            background: var(--green); color: #fff; font-size: 13px; font-weight: 600;
             border-radius: var(--radius-md); opacity: 0; transform: translateY(10px);
             transition: all 0.3s; pointer-events: none; z-index: 100;
+            box-shadow: var(--shadow-md);
         }
         .saved-toast.show { opacity: 1; transform: translateY(0); }
 
         .payload-preview {
-            margin-top: 12px; padding: 12px; background: var(--input-bg);
+            margin-top: 12px; padding: 12px; background: var(--bg);
             border: 1px solid var(--border); border-radius: var(--radius-md);
             font-family: 'JetBrains Mono', 'SF Mono', monospace; font-size: 11px;
             color: var(--text-secondary); white-space: pre-wrap; max-height: 180px;
@@ -246,7 +261,7 @@
         <div class="header">
             <div class="header-left">
                 <h1>Insurance Risk Monitoring<span class="header-tag">UK</span></h1>
-                <p>Demo Control Panel — Backstage trigger UI for risk-change signals</p>
+                <p>Demo Control Panel — Backstage trigger UI for flood risk signals</p>
             </div>
             <div class="status-badge">
                 <span class="status-dot"></span>
@@ -254,17 +269,47 @@
             </div>
         </div>
 
-        <!-- Monitored Risks -->
+        <!-- Monitored Risk Metrics -->
         <div class="card">
-            <div class="card-title">Monitored Risk Categories</div>
-            <div class="risk-badges">
-                <span class="risk-badge active"><span class="risk-icon">🌊</span> Flood</span>
-                <span class="risk-badge active"><span class="risk-icon">🏚️</span> Subsidence</span>
-                <span class="risk-badge"><span class="risk-icon">🔥</span> Wildfire</span>
-                <span class="risk-badge active"><span class="risk-icon">🏗️</span> Rebuilding Cost</span>
-                <span class="risk-badge"><span class="risk-icon">⛈️</span> Storm/Hail</span>
-                <span class="risk-badge"><span class="risk-icon">🔒</span> Crime</span>
-            </div>
+            <div class="card-title">Monitored Risk Metrics — Current Baseline</div>
+            <table class="risk-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Current Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="metric-name"><span class="metric-icon">🛡️</span>Flood Risk Rating (Combined Defended Present Day)</td>
+                        <td><span class="rating-badge rating-low">Low</span></td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name"><span class="metric-icon">🌊</span>Flood Risk Rating (Combined Undefended Present Day)</td>
+                        <td><span class="rating-badge rating-medium">Medium</span></td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name"><span class="metric-icon">🛡️</span>Flood Risk Rating (Combined Defended Long Term High Emissions)</td>
+                        <td><span class="rating-badge rating-low">Low</span></td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name"><span class="metric-icon">🌊</span>Flood Risk Rating (Combined Undefended Long Term High Emissions)</td>
+                        <td><span class="rating-badge rating-medium">Medium</span></td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name"><span class="metric-icon">🏠</span>Property Flood Risk Category</td>
+                        <td><span class="rating-badge rating-low">Low</span></td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name"><span class="metric-icon">📋</span>Property has Flood Insurance Issue</td>
+                        <td><span class="rating-badge rating-no">No</span></td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name"><span class="metric-icon">🌿</span>Japanese Knotweed Risk Rating</td>
+                        <td><span class="rating-badge rating-low">Low</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <!-- Policyholder Information -->
@@ -315,19 +360,19 @@
             </div>
         </div>
 
-        <!-- Act 2: Soft Signal — Rebuilding Cost -->
+        <!-- Act 2: Soft Signal — Flood Risk Moderate Change -->
         <div class="card signal-card soft">
             <div class="signal-header">
-                <div class="signal-icon">🏗️</div>
+                <div class="signal-icon">🌊</div>
                 <div class="signal-info">
-                    <h3>Rebuilding Cost +15%</h3>
+                    <h3>Flood Risk: Low → Medium</h3>
                     <p>Soft signal — triggers personalised email to policyholder</p>
                 </div>
                 <span class="signal-act">Act 2</span>
             </div>
 
             <ul class="signal-steps" id="softSteps">
-                <li>Log risk event in dashboard (rebuilding cost increase)</li>
+                <li>Log risk event in dashboard (flood risk moderate increase)</li>
                 <li>Build personalised email with property details &amp; risk explanation</li>
                 <li>Send email to policyholder with property page link</li>
                 <li>Track email delivery &amp; engagement in dashboard</li>
@@ -335,14 +380,14 @@
 
             <button class="trigger-btn" id="softTrigger">
                 <span class="btn-icon">⚡</span>
-                FIRE SOFT SIGNAL — REBUILDING COST
+                FIRE SOFT SIGNAL — FLOOD RISK LOW → MEDIUM
             </button>
 
             <div class="signal-status" id="softStatus"></div>
             <div class="payload-preview" id="softPayloadPreview"></div>
         </div>
 
-        <!-- Act 3: Hard Signal — Flood Risk -->
+        <!-- Act 3: Hard Signal — Flood Risk Severe Escalation -->
         <div class="card signal-card hard">
             <div class="signal-header">
                 <div class="signal-icon">🌊</div>
@@ -354,7 +399,7 @@
             </div>
 
             <ul class="signal-steps" id="hardSteps">
-                <li>Log risk event in dashboard (flood risk escalation)</li>
+                <li>Log risk event in dashboard (flood risk severe escalation)</li>
                 <li>Trigger AI voice agent call via ElevenLabs</li>
                 <li>Agent explains flood risk change, offers advisor callback</li>
                 <li>Log call transcript &amp; outcome in dashboard</li>
@@ -362,7 +407,7 @@
 
             <button class="trigger-btn" id="hardTrigger">
                 <span class="btn-icon">🌊</span>
-                FIRE HARD SIGNAL — FLOOD RISK
+                FIRE HARD SIGNAL — FLOOD RISK LOW → HIGH
             </button>
 
             <div class="signal-status" id="hardStatus"></div>
@@ -386,11 +431,11 @@
             <div class="config-body" id="configBody">
                 <div class="config-grid">
                     <div class="field">
-                        <label for="webhookSoft">Webhook URL — Soft Signal (Rebuilding Cost → Email)</label>
+                        <label for="webhookSoft">Webhook URL — Soft Signal (Flood Low→Medium → Email)</label>
                         <input type="url" id="webhookSoft" value="" placeholder="https://pricehubble.activepieces.com/api/v1/webhooks/.../sync">
                     </div>
                     <div class="field">
-                        <label for="webhookHard">Webhook URL — Hard Signal (Flood Risk → Voice Call)</label>
+                        <label for="webhookHard">Webhook URL — Hard Signal (Flood Low→High → Voice Call)</label>
                         <input type="url" id="webhookHard" value="" placeholder="https://pricehubble.activepieces.com/api/v1/webhooks/.../sync">
                     </div>
                     <div class="field">
@@ -412,7 +457,7 @@
     <div class="saved-toast" id="toast"></div>
 
     <script>
-        const STORAGE_KEY = 'irm-demo-config-v1';
+        const STORAGE_KEY = 'irm-demo-config-v2';
         const $ = id => document.getElementById(id);
 
         const els = {
@@ -509,13 +554,37 @@
 
         function v(el, fallback) { return (el && el.value) || fallback || ''; }
 
+        const RISK_METRICS = {
+            flood_defended_present: 'Flood Risk Rating (Combined Defended Present Day Scenario)',
+            flood_undefended_present: 'Flood Risk Rating (Combined Undefended Present Day Scenario)',
+            flood_defended_longterm: 'Flood Risk Rating (Combined Defended Long Term High Emissions Scenario)',
+            flood_undefended_longterm: 'Flood Risk Rating (Combined Undefended Long Term High Emissions Scenario)',
+            property_flood_category: 'Property Flood Risk Category',
+            flood_insurance_issue: 'Property has Flood Insurance Issue',
+            knotweed: 'Japanese Knotweed Risk Rating',
+        };
+
+        function updateRiskTable(changes) {
+            const rows = document.querySelectorAll('.risk-table tbody tr');
+            const metricKeys = Object.keys(RISK_METRICS);
+            metricKeys.forEach((key, i) => {
+                if (changes[key] && rows[i]) {
+                    const cell = rows[i].querySelector('td:last-child');
+                    const val = changes[key];
+                    let cls = 'rating-' + val.toLowerCase();
+                    if (val === 'Yes') cls = 'rating-yes';
+                    if (val === 'No') cls = 'rating-no';
+                    cell.innerHTML = `<span class="rating-badge ${cls}">${val}</span>`;
+                }
+            });
+        }
+
         function buildSoftPayload() {
             const firstName = v(els.firstName, DEFAULTS.firstName);
             const lastName = v(els.lastName, DEFAULTS.lastName);
             const addr = v(els.property_address, DEFAULTS.property_address);
             return {
-                signal_type: 'rebuilding_cost_increase',
-                risk_category: 'rebuilding_cost',
+                signal_type: 'flood_risk_moderate_increase',
                 severity: 'medium',
                 customer_first_name: firstName,
                 customer_last_name: lastName,
@@ -526,14 +595,19 @@
                 policy_ref: v(els.policy_ref, DEFAULTS.policy_ref),
                 advisor_name: v(els.advisor_name, DEFAULTS.advisor_name),
                 insurer_name: v(els.insurer_name, DEFAULTS.insurer_name),
+                risk_metrics: {
+                    flood_defended_present: { previous: 'Low', new: 'Medium', metric: RISK_METRICS.flood_defended_present },
+                    flood_undefended_present: { previous: 'Medium', new: 'Medium', metric: RISK_METRICS.flood_undefended_present },
+                    flood_defended_longterm: { previous: 'Low', new: 'Medium', metric: RISK_METRICS.flood_defended_longterm },
+                    flood_undefended_longterm: { previous: 'Medium', new: 'High', metric: RISK_METRICS.flood_undefended_longterm },
+                    property_flood_category: { previous: 'Low', new: 'Medium', metric: RISK_METRICS.property_flood_category },
+                    flood_insurance_issue: { previous: 'No', new: 'No', metric: RISK_METRICS.flood_insurance_issue },
+                    knotweed: { previous: 'Low', new: 'Low', metric: RISK_METRICS.knotweed },
+                },
                 risk_change: {
-                    category: 'Rebuilding Cost',
-                    previous_level: '£285,000',
-                    new_level: '£327,750',
-                    change_percent: 15,
-                    title: 'Rebuilding cost increased by 15%',
-                    description: `The estimated rebuilding cost for ${addr} has increased by 15% due to rising construction material and labour costs. Your current policy may no longer provide adequate cover in the event of a total loss.`,
-                    recommendation: 'Review your buildings insurance sum insured to ensure it reflects the current rebuilding cost.',
+                    title: 'Flood risk increased from Low to Medium',
+                    description: `Updated Environment Agency modelling shows increased surface water and river flood exposure for ${addr}. The defended present-day scenario has moved from Low to Medium, indicating rising risk even with existing flood defences in place.`,
+                    recommendation: 'Review your flood cover limits and consider whether your current policy adequately covers flood-related damage. Contact your advisor to discuss options.',
                 },
             };
         }
@@ -543,8 +617,7 @@
             const lastName = v(els.lastName, DEFAULTS.lastName);
             const addr = v(els.property_address, DEFAULTS.property_address);
             return {
-                signal_type: 'flood_risk_escalation',
-                risk_category: 'flood',
+                signal_type: 'flood_risk_severe_escalation',
                 severity: 'high',
                 customer_first_name: firstName,
                 customer_last_name: lastName,
@@ -559,14 +632,19 @@
                 agent_phone_number_id: v(els.agent_phone_number_id, DEFAULTS.agent_phone_number_id),
                 language_spoken: 'en-GB',
                 first_message: `Hello, is this ${firstName}?`,
+                risk_metrics: {
+                    flood_defended_present: { previous: 'Low', new: 'High', metric: RISK_METRICS.flood_defended_present },
+                    flood_undefended_present: { previous: 'Medium', new: 'High', metric: RISK_METRICS.flood_undefended_present },
+                    flood_defended_longterm: { previous: 'Low', new: 'High', metric: RISK_METRICS.flood_defended_longterm },
+                    flood_undefended_longterm: { previous: 'Medium', new: 'High', metric: RISK_METRICS.flood_undefended_longterm },
+                    property_flood_category: { previous: 'Low', new: 'High', metric: RISK_METRICS.property_flood_category },
+                    flood_insurance_issue: { previous: 'No', new: 'Yes', metric: RISK_METRICS.flood_insurance_issue },
+                    knotweed: { previous: 'Low', new: 'Low', metric: RISK_METRICS.knotweed },
+                },
                 risk_change: {
-                    category: 'Flood Exposure',
-                    previous_level: 'Low',
-                    new_level: 'High',
-                    flood_zone: 'Flood Zone 3',
                     title: 'Flood risk escalated from Low to High',
-                    description: `${addr} has been reclassified into Flood Zone 3 following updated Environment Agency flood mapping. This means there is a 1 in 100 or greater annual probability of river flooding.`,
-                    recommendation: 'Review your flood cover limits and consider whether additional flood protection measures are appropriate.',
+                    description: `${addr} has been reclassified as High flood risk across all defended and undefended scenarios following updated Environment Agency flood mapping. A flood insurance issue has also been flagged for this property.`,
+                    recommendation: 'Urgent review of flood cover required. The property may need specialist flood insurance. Contact your advisor immediately to discuss revised cover options and flood resilience measures.',
                 },
             };
         }
@@ -627,14 +705,22 @@
 
             try {
                 setStatus(els.softStatus, 'Firing soft signal...', 'pending');
-                log('⚡ Firing soft signal → Rebuilding cost +15%', 'warn');
+                log('⚡ Firing soft signal → Flood risk Low → Medium', 'warn');
 
                 const payload = buildSoftPayload();
+
+                updateRiskTable({
+                    flood_defended_present: 'Medium',
+                    flood_defended_longterm: 'Medium',
+                    flood_undefended_longterm: 'High',
+                    property_flood_category: 'Medium',
+                });
+
                 const result = await fireWebhook(webhookUrl, payload);
                 log(`Response: ${result.mode === 'opaque' ? 'sent (opaque)' : 'HTTP ' + result.status}`, result.ok ? 'ok' : 'err');
 
                 markStep(els.softSteps, 0);
-                log(`Risk event logged → rebuilding cost increase for ${payload.customer_name}`, 'ok');
+                log(`Risk event logged → flood risk moderate increase for ${payload.customer_name}`, 'ok');
 
                 markStep(els.softSteps, 1);
                 log(`Email built → property: ${payload.property_address}`, 'ok');
@@ -675,11 +761,21 @@
                 log('🌊 Firing hard signal → Flood risk Low → High', 'warn');
 
                 const payload = buildHardPayload();
+
+                updateRiskTable({
+                    flood_defended_present: 'High',
+                    flood_undefended_present: 'High',
+                    flood_defended_longterm: 'High',
+                    flood_undefended_longterm: 'High',
+                    property_flood_category: 'High',
+                    flood_insurance_issue: 'Yes',
+                });
+
                 const result = await fireWebhook(webhookUrl, payload);
                 log(`Response: ${result.mode === 'opaque' ? 'sent (opaque)' : 'HTTP ' + result.status}`, result.ok ? 'ok' : 'err');
 
                 markStep(els.hardSteps, 0);
-                log(`Risk event logged → flood risk escalation for ${payload.customer_name}`, 'ok');
+                log(`Risk event logged → flood risk severe escalation for ${payload.customer_name}`, 'ok');
 
                 setStatus(els.hardStatus, 'Voice agent call in progress...', 'pending');
                 markStep(els.hardSteps, 1);
@@ -727,8 +823,8 @@
 
         loadConfig();
         updatePayloadPreviews();
-        log('Insurance Risk Monitoring demo ready — v1', 'info');
-        log('Market: UK | Signals: Rebuilding Cost, Flood Risk', 'info');
+        log('Insurance Risk Monitoring demo ready — v2', 'info');
+        log('Market: UK | Focus: Flood Risk & Japanese Knotweed', 'info');
     </script>
 </body>
 </html>
