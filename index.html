@@ -91,7 +91,8 @@
         .context-banner strong { font-weight: 700; color: var(--brand-dark); }
 
         /* Two-column layout: risk metrics + policyholder side-by-side */
-        .row-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .row-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+        .row-2col > * { min-width: 0; }
 
         .lead-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .lead-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
@@ -115,7 +116,7 @@
         .field input::placeholder { color: var(--text-muted); }
         .field select { cursor: pointer; }
 
-        .risk-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .risk-table { width: 100%; border-collapse: collapse; font-size: 12px; table-layout: fixed; }
         .risk-table th {
             text-align: left; padding: 6px 8px; font-weight: 600; font-size: 10px;
             color: var(--text-secondary); border-bottom: 2px solid var(--border);
@@ -123,7 +124,7 @@
         }
         .risk-table td { padding: 7px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
         .risk-table tr:last-child td { border-bottom: none; }
-        .risk-table .metric-name { font-weight: 500; color: var(--text-primary); font-size: 11px; }
+        .risk-table .metric-name { font-weight: 500; color: var(--text-primary); font-size: 11px; word-wrap: break-word; }
         .risk-table .metric-icon { margin-right: 6px; font-size: 12px; }
 
         .rating-badge {
@@ -302,6 +303,7 @@
             <div class="card">
                 <div class="card-title">Monitored Risk Metrics</div>
                 <table class="risk-table">
+                    <colgroup><col style="width:72%"><col style="width:28%"></colgroup>
                     <thead>
                         <tr>
                             <th>Metric</th>
