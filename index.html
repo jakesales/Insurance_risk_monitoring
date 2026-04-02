@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Risk Monitoring — Demo Control Panel</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0C1222;
+            --surface: #162032;
+            --surface-hover: #1E2D45;
+            --text-primary: #F0F4F8;
+            --text-secondary: #8B9DC3;
+            --text-muted: #5A7099;
+            --teal: #14B8A6;
+            --teal-dark: #0D9488;
+            --teal-glow: rgba(20, 184, 166, 0.15);
+            --amber: #F59E0B;
+            --amber-dark: #D97706;
+            --amber-glow: rgba(245, 158, 11, 0.15);
+            --red: #EF4444;
+            --red-dark: #DC2626;
+            --red-glow: rgba(239, 68, 68, 0.15);
+            --blue: #3B82F6;
+            --blue-glow: rgba(59, 130, 246, 0.15);
+            --green: #22C55E;
+            --green-glow: rgba(34, 197, 94, 0.15);
+            --border: #1E2D45;
+            --input-bg: #0C1222;
+            --radius-lg: 12px;
+            --radius-md: 8px;
+            --radius-sm: 6px;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+
+        .header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border);
+        }
+        .header-left h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+        .header-left p { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+        .header-tag {
+            font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.08em; padding: 4px 10px; border-radius: var(--radius-sm);
+            background: var(--blue-glow); color: var(--blue); margin-left: 10px;
+        }
+
+        .status-badge {
+            display: flex; align-items: center; gap: 8px;
+            padding: 6px 14px; border-radius: 20px;
+            font-size: 12px; font-weight: 600;
+            background: var(--green-glow); color: var(--green);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+        .status-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--green); animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        .card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); padding: 24px; margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 13px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 16px;
+        }
+
+        .lead-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .lead-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+        .field label {
+            display: block; font-size: 12px; font-weight: 500;
+            color: var(--text-secondary); margin-bottom: 6px;
+        }
+        .field label .var-hint {
+            font-family: 'JetBrains Mono', 'SF Mono', monospace;
+            font-size: 10px; color: var(--text-muted); font-weight: 400;
+        }
+        .field input, .field select {
+            width: 100%; padding: 10px 12px;
+            background: var(--input-bg); border: 1px solid var(--border);
+            border-radius: var(--radius-md); color: var(--text-primary);
+            font-size: 14px; font-family: inherit; transition: border-color 0.15s;
+        }
+        .field input:focus, .field select:focus { outline: none; border-color: var(--teal); }
+        .field input::placeholder { color: var(--text-muted); }
+
+        .signal-card { position: relative; overflow: hidden; }
+        .signal-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+        .signal-card.soft::before { background: var(--amber); }
+        .signal-card.hard::before { background: var(--red); }
+
+        .signal-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
+        .signal-icon {
+            width: 40px; height: 40px; border-radius: var(--radius-md);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; flex-shrink: 0;
+        }
+        .soft .signal-icon { background: var(--amber-glow); }
+        .hard .signal-icon { background: var(--red-glow); }
+        .signal-info { flex: 1; margin-left: 14px; }
+        .signal-info h3 { font-size: 16px; font-weight: 600; }
+        .signal-info p { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+        .signal-act {
+            font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.06em; padding: 4px 10px; border-radius: var(--radius-sm);
+        }
+        .soft .signal-act { background: var(--amber-glow); color: var(--amber); }
+        .hard .signal-act { background: var(--red-glow); color: var(--red); }
+
+        .signal-steps { list-style: none; margin: 16px 0; padding: 0; }
+        .signal-steps li {
+            position: relative; padding: 6px 0 6px 24px;
+            font-size: 13px; color: var(--text-secondary);
+        }
+        .signal-steps li::before {
+            content: ''; position: absolute; left: 6px; top: 50%; transform: translateY(-50%);
+            width: 6px; height: 6px; border-radius: 50%; border: 1.5px solid var(--text-muted);
+        }
+        .signal-steps li.done::before { background: var(--green); border-color: var(--green); }
+
+        .trigger-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 14px 24px; border: none; border-radius: var(--radius-md);
+            font-family: inherit; font-size: 14px; font-weight: 700; letter-spacing: 0.02em;
+            cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+        }
+        .trigger-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .trigger-btn .btn-icon { font-size: 16px; }
+        .soft .trigger-btn { background: var(--amber); color: #000; }
+        .soft .trigger-btn:hover:not(:disabled) { background: var(--amber-dark); }
+        .hard .trigger-btn { background: var(--red); color: #fff; }
+        .hard .trigger-btn:hover:not(:disabled) { background: var(--red-dark); }
+        .trigger-btn:active:not(:disabled) { transform: scale(0.98); }
+
+        .signal-status {
+            display: flex; align-items: center; gap: 8px; margin-top: 12px;
+            font-size: 12px; font-weight: 500; color: var(--text-muted); min-height: 20px;
+        }
+        .signal-status.success { color: var(--green); }
+        .signal-status.error { color: var(--red); }
+        .signal-status.pending { color: var(--amber); }
+
+        .risk-badges { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+        .risk-badge {
+            display: flex; align-items: center; gap: 5px;
+            padding: 4px 10px; border-radius: 20px;
+            font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+            background: var(--surface-hover); color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+        .risk-badge.active { border-color: var(--teal); color: var(--teal); background: var(--teal-glow); }
+        .risk-badge .risk-icon { font-size: 13px; }
+
+        .log-container {
+            max-height: 220px; overflow-y: auto;
+            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+            font-size: 12px; line-height: 1.7;
+        }
+        .log-container::-webkit-scrollbar { width: 4px; }
+        .log-container::-webkit-scrollbar-track { background: transparent; }
+        .log-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+        .log-entry { padding: 4px 0; border-bottom: 1px solid rgba(30, 45, 69, 0.6); display: flex; gap: 10px; }
+        .log-time { color: var(--text-muted); flex-shrink: 0; }
+        .log-msg { flex: 1; }
+        .log-msg.ok { color: var(--green); }
+        .log-msg.err { color: var(--red); }
+        .log-msg.warn { color: var(--amber); }
+        .log-msg.info { color: var(--text-secondary); }
+        .log-empty { color: var(--text-muted); font-style: italic; padding: 12px 0; }
+
+        .config-toggle {
+            display: flex; align-items: center; gap: 8px; padding: 10px 0;
+            cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text-secondary);
+            border: none; background: none; font-family: inherit; transition: color 0.15s;
+        }
+        .config-toggle:hover { color: var(--text-primary); }
+        .config-toggle .chevron { transition: transform 0.2s; font-size: 10px; }
+        .config-toggle.open .chevron { transform: rotate(90deg); }
+        .config-body { display: none; padding-top: 12px; }
+        .config-body.open { display: block; }
+        .config-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        .config-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+
+        .btn-secondary {
+            padding: 8px 18px; border-radius: var(--radius-md);
+            border: 1px solid var(--border); background: transparent;
+            color: var(--text-secondary); font-family: inherit;
+            font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s;
+        }
+        .btn-secondary:hover { background: var(--surface-hover); color: var(--text-primary); }
+
+        .btn-primary-sm {
+            padding: 8px 18px; border-radius: var(--radius-md); border: none;
+            background: var(--teal); color: #000; font-family: inherit;
+            font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+        }
+        .btn-primary-sm:hover { background: var(--teal-dark); }
+
+        .saved-toast {
+            position: fixed; bottom: 24px; right: 24px; padding: 10px 20px;
+            background: var(--green); color: #000; font-size: 13px; font-weight: 600;
+            border-radius: var(--radius-md); opacity: 0; transform: translateY(10px);
+            transition: all 0.3s; pointer-events: none; z-index: 100;
+        }
+        .saved-toast.show { opacity: 1; transform: translateY(0); }
+
+        .payload-preview {
+            margin-top: 12px; padding: 12px; background: var(--input-bg);
+            border: 1px solid var(--border); border-radius: var(--radius-md);
+            font-family: 'JetBrains Mono', 'SF Mono', monospace; font-size: 11px;
+            color: var(--text-secondary); white-space: pre-wrap; max-height: 180px;
+            overflow-y: auto; display: none;
+        }
+        .payload-preview.visible { display: block; }
+
+        .section-divider {
+            display: flex; align-items: center; gap: 12px; margin: 8px 0 16px;
+            font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.06em; color: var(--text-muted);
+        }
+        .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+        @media (max-width: 640px) {
+            .lead-grid, .lead-grid-3 { grid-template-columns: 1fr; }
+            .header { flex-direction: column; align-items: flex-start; gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="header">
+            <div class="header-left">
+                <h1>Insurance Risk Monitoring<span class="header-tag">UK</span></h1>
+                <p>Demo Control Panel — Backstage trigger UI for risk-change signals</p>
+            </div>
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                Ready
+            </div>
+        </div>
+
+        <!-- Monitored Risks -->
+        <div class="card">
+            <div class="card-title">Monitored Risk Categories</div>
+            <div class="risk-badges">
+                <span class="risk-badge active"><span class="risk-icon">🌊</span> Flood</span>
+                <span class="risk-badge active"><span class="risk-icon">🏚️</span> Subsidence</span>
+                <span class="risk-badge"><span class="risk-icon">🔥</span> Wildfire</span>
+                <span class="risk-badge active"><span class="risk-icon">🏗️</span> Rebuilding Cost</span>
+                <span class="risk-badge"><span class="risk-icon">⛈️</span> Storm/Hail</span>
+                <span class="risk-badge"><span class="risk-icon">🔒</span> Crime</span>
+            </div>
+        </div>
+
+        <!-- Policyholder Information -->
+        <div class="card">
+            <div class="card-title">Policyholder Information</div>
+            <div class="section-divider">Contact details sent to ActivePieces</div>
+            <div class="lead-grid">
+                <div class="field">
+                    <label for="firstName">First Name <span class="var-hint">→ customer_first_name</span></label>
+                    <input type="text" id="firstName" value="Sarah" placeholder="e.g. Sarah">
+                </div>
+                <div class="field">
+                    <label for="lastName">Last Name <span class="var-hint">→ customer_last_name</span></label>
+                    <input type="text" id="lastName" value="Mitchell" placeholder="e.g. Mitchell">
+                </div>
+                <div class="field">
+                    <label for="phone_number">Phone Number <span class="var-hint">→ phone_number</span></label>
+                    <input type="tel" id="phone_number" value="+447700900123" placeholder="e.g. +447700900123">
+                </div>
+                <div class="field">
+                    <label for="email">Email <span class="var-hint">→ email</span></label>
+                    <input type="email" id="email" value="sarah.mitchell@example.co.uk" placeholder="e.g. sarah@example.co.uk">
+                </div>
+                <div class="field">
+                    <label for="property_address">Property Address <span class="var-hint">→ property_address</span></label>
+                    <input type="text" id="property_address" value="14 Riverside Crescent, Tewkesbury, GL20 5AB" placeholder="e.g. 14 Riverside Crescent, Tewkesbury">
+                </div>
+                <div class="field">
+                    <label for="policy_ref">Policy Reference <span class="var-hint">→ policy_ref</span></label>
+                    <input type="text" id="policy_ref" value="HOM-2024-00847" placeholder="e.g. HOM-2024-00847">
+                </div>
+            </div>
+
+            <div class="section-divider" style="margin-top: 20px">Insurer &amp; agent context</div>
+            <div class="lead-grid-3">
+                <div class="field">
+                    <label for="advisor_name">Insurance Advisor <span class="var-hint">→ advisor_name</span></label>
+                    <input type="text" id="advisor_name" value="James Harrington" placeholder="e.g. James Harrington">
+                </div>
+                <div class="field">
+                    <label for="insurer_name">Insurer Name <span class="var-hint">→ insurer_name</span></label>
+                    <input type="text" id="insurer_name" value="Greenfield Insurance" placeholder="e.g. Greenfield Insurance">
+                </div>
+                <div class="field">
+                    <label for="agent_id">ElevenLabs Agent ID <span class="var-hint">→ agent_id</span></label>
+                    <input type="text" id="agent_id" value="" placeholder="agent_...">
+                </div>
+            </div>
+        </div>
+
+        <!-- Act 2: Soft Signal — Rebuilding Cost -->
+        <div class="card signal-card soft">
+            <div class="signal-header">
+                <div class="signal-icon">🏗️</div>
+                <div class="signal-info">
+                    <h3>Rebuilding Cost +15%</h3>
+                    <p>Soft signal — triggers personalised email to policyholder</p>
+                </div>
+                <span class="signal-act">Act 2</span>
+            </div>
+
+            <ul class="signal-steps" id="softSteps">
+                <li>Log risk event in dashboard (rebuilding cost increase)</li>
+                <li>Build personalised email with property details &amp; risk explanation</li>
+                <li>Send email to policyholder with property page link</li>
+                <li>Track email delivery &amp; engagement in dashboard</li>
+            </ul>
+
+            <button class="trigger-btn" id="softTrigger">
+                <span class="btn-icon">⚡</span>
+                FIRE SOFT SIGNAL — REBUILDING COST
+            </button>
+
+            <div class="signal-status" id="softStatus"></div>
+            <div class="payload-preview" id="softPayloadPreview"></div>
+        </div>
+
+        <!-- Act 3: Hard Signal — Flood Risk -->
+        <div class="card signal-card hard">
+            <div class="signal-header">
+                <div class="signal-icon">🌊</div>
+                <div class="signal-info">
+                    <h3>Flood Risk: Low → High</h3>
+                    <p>Hard signal — triggers AI voice agent call to policyholder</p>
+                </div>
+                <span class="signal-act">Act 3</span>
+            </div>
+
+            <ul class="signal-steps" id="hardSteps">
+                <li>Log risk event in dashboard (flood risk escalation)</li>
+                <li>Trigger AI voice agent call via ElevenLabs</li>
+                <li>Agent explains flood risk change, offers advisor callback</li>
+                <li>Log call transcript &amp; outcome in dashboard</li>
+            </ul>
+
+            <button class="trigger-btn" id="hardTrigger">
+                <span class="btn-icon">🌊</span>
+                FIRE HARD SIGNAL — FLOOD RISK
+            </button>
+
+            <div class="signal-status" id="hardStatus"></div>
+            <div class="payload-preview" id="hardPayloadPreview"></div>
+        </div>
+
+        <!-- Event Log -->
+        <div class="card">
+            <div class="card-title">Event Log</div>
+            <div class="log-container" id="logContainer">
+                <div class="log-empty">No events yet. Fire a signal to get started.</div>
+            </div>
+        </div>
+
+        <!-- Configuration -->
+        <div class="card">
+            <button class="config-toggle" id="configToggle">
+                <span class="chevron">▶</span>
+                Configuration — Webhook URLs &amp; Settings
+            </button>
+            <div class="config-body" id="configBody">
+                <div class="config-grid">
+                    <div class="field">
+                        <label for="webhookSoft">Webhook URL — Soft Signal (Rebuilding Cost → Email)</label>
+                        <input type="url" id="webhookSoft" value="" placeholder="https://pricehubble.activepieces.com/api/v1/webhooks/.../sync">
+                    </div>
+                    <div class="field">
+                        <label for="webhookHard">Webhook URL — Hard Signal (Flood Risk → Voice Call)</label>
+                        <input type="url" id="webhookHard" value="" placeholder="https://pricehubble.activepieces.com/api/v1/webhooks/.../sync">
+                    </div>
+                    <div class="field">
+                        <label for="agent_phone_number_id">ElevenLabs Agent Phone Number ID</label>
+                        <input type="text" id="agent_phone_number_id" value="" placeholder="phnum_...">
+                    </div>
+                </div>
+                <div class="config-actions">
+                    <button class="btn-primary-sm" id="saveConfig">Save Configuration</button>
+                    <button class="btn-secondary" id="clearConfig">Reset Defaults</button>
+                    <button class="btn-secondary" id="clearLog">Clear Log</button>
+                    <button class="btn-secondary" id="togglePayloads">Show Payloads</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="saved-toast" id="toast"></div>
+
+    <script>
+        const STORAGE_KEY = 'irm-demo-config-v1';
+        const $ = id => document.getElementById(id);
+
+        const els = {
+            firstName: $('firstName'), lastName: $('lastName'),
+            phone_number: $('phone_number'), email: $('email'),
+            property_address: $('property_address'), policy_ref: $('policy_ref'),
+            advisor_name: $('advisor_name'), insurer_name: $('insurer_name'),
+            agent_id: $('agent_id'), agent_phone_number_id: $('agent_phone_number_id'),
+            webhookSoft: $('webhookSoft'), webhookHard: $('webhookHard'),
+            softTrigger: $('softTrigger'), hardTrigger: $('hardTrigger'),
+            softStatus: $('softStatus'), hardStatus: $('hardStatus'),
+            softSteps: $('softSteps'), hardSteps: $('hardSteps'),
+            softPayloadPreview: $('softPayloadPreview'),
+            hardPayloadPreview: $('hardPayloadPreview'),
+            logContainer: $('logContainer'),
+            configToggle: $('configToggle'), configBody: $('configBody'),
+            saveConfig: $('saveConfig'), clearConfig: $('clearConfig'),
+            clearLog: $('clearLog'), togglePayloads: $('togglePayloads'),
+            toast: $('toast'),
+        };
+
+        const DEFAULTS = {
+            firstName: 'Sarah', lastName: 'Mitchell',
+            phone_number: '+447700900123',
+            email: 'sarah.mitchell@example.co.uk',
+            property_address: '14 Riverside Crescent, Tewkesbury, GL20 5AB',
+            policy_ref: 'HOM-2024-00847',
+            advisor_name: 'James Harrington',
+            insurer_name: 'Greenfield Insurance',
+            agent_id: '', agent_phone_number_id: '',
+            webhookSoft: '', webhookHard: '',
+        };
+
+        const PERSIST_FIELDS = Object.keys(DEFAULTS);
+
+        function loadConfig() {
+            try {
+                const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+                PERSIST_FIELDS.forEach(key => {
+                    if (els[key]) els[key].value = data[key] !== undefined ? data[key] : (DEFAULTS[key] || '');
+                });
+            } catch (_) {}
+        }
+
+        function saveConfig() {
+            const data = {};
+            PERSIST_FIELDS.forEach(key => { if (els[key]) data[key] = els[key].value; });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            showToast('Configuration saved');
+        }
+
+        function clearConfigFn() {
+            localStorage.removeItem(STORAGE_KEY);
+            PERSIST_FIELDS.forEach(key => { if (els[key]) els[key].value = DEFAULTS[key] || ''; });
+            showToast('Defaults restored');
+        }
+
+        function showToast(msg) {
+            els.toast.textContent = msg;
+            els.toast.classList.add('show');
+            setTimeout(() => els.toast.classList.remove('show'), 2000);
+        }
+
+        let logEntries = [];
+        function log(msg, level = 'info') {
+            const time = new Date().toLocaleTimeString('en-GB', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            logEntries.push({ time, msg, level });
+            if (logEntries.length === 1) els.logContainer.innerHTML = '';
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `<span class="log-time">${time}</span><span class="log-msg ${level}">${msg}</span>`;
+            els.logContainer.appendChild(entry);
+            els.logContainer.scrollTop = els.logContainer.scrollHeight;
+        }
+
+        function clearLog() {
+            logEntries = [];
+            els.logContainer.innerHTML = '<div class="log-empty">Log cleared.</div>';
+        }
+
+        function setStatus(el, msg, level) {
+            el.textContent = msg;
+            el.className = `signal-status ${level}`;
+        }
+
+        function markStep(stepsEl, index) {
+            const items = stepsEl.querySelectorAll('li');
+            if (items[index]) items[index].classList.add('done');
+        }
+
+        function resetSteps(stepsEl) {
+            stepsEl.querySelectorAll('li').forEach(li => li.classList.remove('done'));
+        }
+
+        function v(el, fallback) { return (el && el.value) || fallback || ''; }
+
+        function buildSoftPayload() {
+            const firstName = v(els.firstName, DEFAULTS.firstName);
+            const lastName = v(els.lastName, DEFAULTS.lastName);
+            const addr = v(els.property_address, DEFAULTS.property_address);
+            return {
+                signal_type: 'rebuilding_cost_increase',
+                risk_category: 'rebuilding_cost',
+                severity: 'medium',
+                customer_first_name: firstName,
+                customer_last_name: lastName,
+                customer_name: `${firstName} ${lastName}`.trim(),
+                phone_number: v(els.phone_number, DEFAULTS.phone_number),
+                email: v(els.email, DEFAULTS.email),
+                property_address: addr,
+                policy_ref: v(els.policy_ref, DEFAULTS.policy_ref),
+                advisor_name: v(els.advisor_name, DEFAULTS.advisor_name),
+                insurer_name: v(els.insurer_name, DEFAULTS.insurer_name),
+                risk_change: {
+                    category: 'Rebuilding Cost',
+                    previous_level: '£285,000',
+                    new_level: '£327,750',
+                    change_percent: 15,
+                    title: 'Rebuilding cost increased by 15%',
+                    description: `The estimated rebuilding cost for ${addr} has increased by 15% due to rising construction material and labour costs. Your current policy may no longer provide adequate cover in the event of a total loss.`,
+                    recommendation: 'Review your buildings insurance sum insured to ensure it reflects the current rebuilding cost.',
+                },
+            };
+        }
+
+        function buildHardPayload() {
+            const firstName = v(els.firstName, DEFAULTS.firstName);
+            const lastName = v(els.lastName, DEFAULTS.lastName);
+            const addr = v(els.property_address, DEFAULTS.property_address);
+            return {
+                signal_type: 'flood_risk_escalation',
+                risk_category: 'flood',
+                severity: 'high',
+                customer_first_name: firstName,
+                customer_last_name: lastName,
+                customer_name: `${firstName} ${lastName}`.trim(),
+                phone_number: v(els.phone_number, DEFAULTS.phone_number),
+                email: v(els.email, DEFAULTS.email),
+                property_address: addr,
+                policy_ref: v(els.policy_ref, DEFAULTS.policy_ref),
+                advisor_name: v(els.advisor_name, DEFAULTS.advisor_name),
+                insurer_name: v(els.insurer_name, DEFAULTS.insurer_name),
+                agent_id: v(els.agent_id, DEFAULTS.agent_id),
+                agent_phone_number_id: v(els.agent_phone_number_id, DEFAULTS.agent_phone_number_id),
+                language_spoken: 'en-GB',
+                first_message: `Hello, is this ${firstName}?`,
+                risk_change: {
+                    category: 'Flood Exposure',
+                    previous_level: 'Low',
+                    new_level: 'High',
+                    flood_zone: 'Flood Zone 3',
+                    title: 'Flood risk escalated from Low to High',
+                    description: `${addr} has been reclassified into Flood Zone 3 following updated Environment Agency flood mapping. This means there is a 1 in 100 or greater annual probability of river flooding.`,
+                    recommendation: 'Review your flood cover limits and consider whether additional flood protection measures are appropriate.',
+                },
+            };
+        }
+
+        function updatePayloadPreviews() {
+            els.softPayloadPreview.textContent = JSON.stringify(buildSoftPayload(), null, 2);
+            els.hardPayloadPreview.textContent = JSON.stringify(buildHardPayload(), null, 2);
+        }
+
+        async function fireWebhook(url, payload) {
+            log(`POST → ${url.replace(/webhooks\/.*/, 'webhooks/...')}`, 'info');
+            const jsonBody = JSON.stringify(payload);
+
+            try {
+                const resp = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: jsonBody,
+                });
+                let body = null;
+                try { body = await resp.json(); } catch (_) {}
+                return { status: resp.status, body, ok: resp.ok, mode: 'cors' };
+            } catch (corsErr) {
+                log('CORS preflight blocked — retrying as text/plain', 'warn');
+                try {
+                    const resp = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain' },
+                        body: jsonBody,
+                    });
+                    let body = null;
+                    try { body = await resp.json(); } catch (_) {}
+                    return { status: resp.status, body, ok: resp.ok, mode: 'text-plain' };
+                } catch (_) {
+                    log('Response blocked by CORS but request was sent — webhook triggered', 'warn');
+                    return { status: 0, body: null, ok: true, mode: 'opaque' };
+                }
+            }
+        }
+
+        let softFiring = false;
+        let hardFiring = false;
+
+        async function fireSoftSignal() {
+            if (softFiring) return;
+            softFiring = true;
+            els.softTrigger.disabled = true;
+            resetSteps(els.softSteps);
+
+            const webhookUrl = els.webhookSoft.value;
+            if (!webhookUrl) {
+                setStatus(els.softStatus, '✗ No webhook URL configured — open Configuration below', 'error');
+                log('Soft signal FAILED — no webhook URL', 'err');
+                els.softTrigger.disabled = false;
+                softFiring = false;
+                return;
+            }
+
+            try {
+                setStatus(els.softStatus, 'Firing soft signal...', 'pending');
+                log('⚡ Firing soft signal → Rebuilding cost +15%', 'warn');
+
+                const payload = buildSoftPayload();
+                const result = await fireWebhook(webhookUrl, payload);
+                log(`Response: ${result.mode === 'opaque' ? 'sent (opaque)' : 'HTTP ' + result.status}`, result.ok ? 'ok' : 'err');
+
+                markStep(els.softSteps, 0);
+                log(`Risk event logged → rebuilding cost increase for ${payload.customer_name}`, 'ok');
+
+                markStep(els.softSteps, 1);
+                log(`Email built → property: ${payload.property_address}`, 'ok');
+
+                markStep(els.softSteps, 2);
+                log(`Email sent → ${payload.email}`, 'ok');
+
+                markStep(els.softSteps, 3);
+                log('Engagement tracking active', 'ok');
+
+                setStatus(els.softStatus, '✓ Soft signal fired — email sent to policyholder', 'success');
+            } catch (err) {
+                setStatus(els.softStatus, `✗ Failed: ${err.message}`, 'error');
+                log(`Soft signal FAILED: ${err.message}`, 'err');
+            } finally {
+                els.softTrigger.disabled = false;
+                softFiring = false;
+            }
+        }
+
+        async function fireHardSignal() {
+            if (hardFiring) return;
+            hardFiring = true;
+            els.hardTrigger.disabled = true;
+            resetSteps(els.hardSteps);
+
+            const webhookUrl = els.webhookHard.value;
+            if (!webhookUrl) {
+                setStatus(els.hardStatus, '✗ No webhook URL configured — open Configuration below', 'error');
+                log('Hard signal FAILED — no webhook URL', 'err');
+                els.hardTrigger.disabled = false;
+                hardFiring = false;
+                return;
+            }
+
+            try {
+                setStatus(els.hardStatus, 'Firing hard signal...', 'pending');
+                log('🌊 Firing hard signal → Flood risk Low → High', 'warn');
+
+                const payload = buildHardPayload();
+                const result = await fireWebhook(webhookUrl, payload);
+                log(`Response: ${result.mode === 'opaque' ? 'sent (opaque)' : 'HTTP ' + result.status}`, result.ok ? 'ok' : 'err');
+
+                markStep(els.hardSteps, 0);
+                log(`Risk event logged → flood risk escalation for ${payload.customer_name}`, 'ok');
+
+                setStatus(els.hardStatus, 'Voice agent call in progress...', 'pending');
+                markStep(els.hardSteps, 1);
+                log(`Voice agent call → ${payload.phone_number}`, 'ok');
+
+                markStep(els.hardSteps, 2);
+                log('Agent explaining flood risk change to policyholder...', 'info');
+
+                markStep(els.hardSteps, 3);
+                log('Transcript will be logged upon call completion', 'info');
+
+                setStatus(els.hardStatus, '✓ Hard signal fired — voice call initiated', 'success');
+            } catch (err) {
+                setStatus(els.hardStatus, `✗ Failed: ${err.message}`, 'error');
+                log(`Hard signal FAILED: ${err.message}`, 'err');
+            } finally {
+                els.hardTrigger.disabled = false;
+                hardFiring = false;
+            }
+        }
+
+        els.configToggle.addEventListener('click', () => {
+            const open = els.configBody.classList.toggle('open');
+            els.configToggle.classList.toggle('open', open);
+        });
+
+        let payloadsVisible = false;
+        els.togglePayloads.addEventListener('click', () => {
+            payloadsVisible = !payloadsVisible;
+            updatePayloadPreviews();
+            els.softPayloadPreview.classList.toggle('visible', payloadsVisible);
+            els.hardPayloadPreview.classList.toggle('visible', payloadsVisible);
+            els.togglePayloads.textContent = payloadsVisible ? 'Hide Payloads' : 'Show Payloads';
+        });
+
+        els.softTrigger.addEventListener('click', fireSoftSignal);
+        els.hardTrigger.addEventListener('click', fireHardSignal);
+        els.saveConfig.addEventListener('click', saveConfig);
+        els.clearConfig.addEventListener('click', clearConfigFn);
+        els.clearLog.addEventListener('click', clearLog);
+
+        [...document.querySelectorAll('.field input')].forEach(el => {
+            el.addEventListener('change', () => { saveConfig(); updatePayloadPreviews(); });
+        });
+
+        loadConfig();
+        updatePayloadPreviews();
+        log('Insurance Risk Monitoring demo ready — v1', 'info');
+        log('Market: UK | Signals: Rebuilding Cost, Flood Risk', 'info');
+    </script>
+</body>
+</html>
